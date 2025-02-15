@@ -1,4 +1,4 @@
-/macEnv
-/database.db
-/constants.py
-/.vscode
+macEnv/
+database.db
+constants.py
+.vscode/
