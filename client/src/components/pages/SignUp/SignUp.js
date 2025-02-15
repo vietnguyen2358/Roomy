@@ -5,16 +5,16 @@ import AuthForm from "../../layout/auth/AuthForm";
 
 function SignUp() {
   return (
-    <div className="home-container">
+    <div className="auth-container">
       <img
         src={process.env.PUBLIC_URL + "/assets/images/auth-bg.png"}
         alt="circle"
-        className="home-container__auth-bg"
+        className="auth-container__auth-bg"
       />
       <img
         src={process.env.PUBLIC_URL + "/assets/images/auth-img.png"}
         alt="people"
-        className="home-container__auth-img"
+        className="auth-container__auth-img"
       />
 
       {/* Auth Form */}

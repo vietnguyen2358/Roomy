@@ -221,17 +221,17 @@ html {
   align-items: center;
 }
 
-.home-container {
+.auth-container {
   position: relative;
   width: 100vw;
   height: 100vh;
 }
-.home-container__auth-bg {
+.auth-container__auth-bg {
   position: absolute;
   top: -5vh;
   left: -5vh;
 }
-.home-container__auth-img {
+.auth-container__auth-img {
   position: absolute;
   top: 35vh;
   left: 0;

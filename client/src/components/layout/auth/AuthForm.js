@@ -14,7 +14,9 @@ function AuthForm(props) {
   return (
     <div className="auth-form">
       <form onSubmit={formik.handleSubmit} className="">
-        
+        <h1 className="auth-form__title">
+          Sign Up
+        </h1>
       </form>
     </div>
   );

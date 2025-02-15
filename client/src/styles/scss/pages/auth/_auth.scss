@@ -1,0 +1,23 @@
+// Auth Styles
+
+.auth-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  &__auth-bg {
+    position: absolute;
+    top: -5vh;
+    left: -5vh;
+  }
+
+  &__auth-img {
+    position: absolute;
+    top: 35vh;
+    left: 0;
+    width: 50vw;
+    height: 50vh;
+    z-index: 1000;
+    object-fit: contain;
+  }
+}
