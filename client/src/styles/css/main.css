@@ -219,4 +219,8 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+body {
+  overflow-x: hidden;
 }/*# sourceMappingURL=main.css.map */
