@@ -1,7 +1,5 @@
 import sqlite3
 
-
-
 class User:
     def __init__(self, UUID, firstName, lastName, email, password):
         self.UUID = UUID
@@ -131,6 +129,5 @@ def remove_group(file, user):
                 WHERE UUID = ?;
                 """,
                 (user.UUID))
-
     
 # create_table()
