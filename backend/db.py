@@ -3,6 +3,14 @@ import sqlite3
 con = sqlite3.connect("database.db")
 cur = con.cursor()
 
+class User:
+    def __init__(self, UUID, firstName, lastName, email, password):
+        self.UUID = UUID
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+        self.password = password
+
 def create_table():
     cur.executescript("""
                       BEGIN;
@@ -82,5 +90,5 @@ def remove_group(file,ID):
                 WHERE UUID = ID;
 """)
 
-
+    
 # create_table()
