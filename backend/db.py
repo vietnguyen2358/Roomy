@@ -1,7 +1,6 @@
 import sqlite3
 
-con = sqlite3.connect("database.db")
-cur = con.cursor()
+
 
 class User:
     def __init__(self, UUID, firstName, lastName, email, password):
@@ -24,6 +23,8 @@ class Group:
         self.sqFt = sqFt
 
 def create_table():
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
     cur.executescript("""
                       BEGIN;
                       CREATE TABLE IF NOT EXISTS Users(UUID TEXT PRIMARY KEY UNIQUE,
@@ -45,6 +46,8 @@ def create_table():
 
 # creates new user 
 def insert_user(file, user):
+    con = sqlite3.connect(file)
+    cur = con.cursor()
     cur.execute("""
                 INSERT INTO Users VALUES
                     (UUID,
@@ -58,6 +61,8 @@ def insert_user(file, user):
     
 # creates a new apt listing
 def add_group(file,group):
+    con = sqlite3.connect(file)
+    cur = con.cursor()
     cur.execute("""
                 INSERT INTO Groups VALUES
                     (UUID, 
@@ -68,47 +73,64 @@ def add_group(file,group):
                     BATHCOUNT,
                     RENT,
                     ADDRESS,
-                    SQUAREFOOTAGE);
-    """)
+                    SQUAREFOOTAGE)
+                VALUES (?,?,?,?,?,?,?,?,?)
+                """,
+                (group.UUID, group.USERS, group.LINK, group.IMAGES, group.BEDCOUNT,group.BATHCOUNT ,group.RENT ,group.ADDRESS, group.SQUAREFOOTAGE))
     
 # add the user into the apt group    
 def insert_user_group(file, user):
+    con = sqlite3.connect(file)
+    cur = con.cursor()
     cur.execute("""
                 INSERT INTO Groups VALUES
                     (USERS);            
-""")
+                """)
 
 # update the values of apt
 def update_group(file,group):
+    con = sqlite3.connect(file)
+    cur = con.cursor()
     cur.execute("""
                 UPDATE Groups
-                SET (UUID = UUID OR newUUID, 
-                    USERS = USERS OR newUSERS, 
-                    LINK = LINK OR newLINK,
-                    IMAGES = IMAGES OR newIMAGES,
-                    BEDCOUNT = BEDCOUNT OR newBEDCOUNT,
-                    BATHCOUNT = BATHCOUNT OR newBATHCOUNT,
-                    RENT = RENT OR newRENT,
-                    ADDRESS = ADDRESS OR newADDRESS,
-                    SQUAREFOOTAGE = SQUAREFOOTAGE OR newSQUAREFOOTAGE);
-""")
+                SET 
+                UUID = ?, 
+                USERS = ?, 
+                LINK = ?, 
+                IMAGES = ?, 
+                BEDCOUNT = ?, 
+                BATHCOUNT = ?, 
+                RENT = ?, 
+                ADDRESS = ?, 
+                SQUAREFOOTAGE = ?
+            WHERE UUID = ?
+                """,
+                (group.UUID, group.USERS, group.LINK, group.IMAGES, group.BEDCOUNT, group.BATHCOUNT, group.RENT, group.ADDRESS, group.SQUAREFOOTAGE, group.UUID))
     
 #get all apts
-def fetch_all_groups():
+def fetch_all_groups(file):
+    con = sqlite3.connect(file)
+    cur = con.cursor()
     return cur.execute("""SELECT * FROM Groups;""")
 
-def fetch_user(file,ID):
+def fetch_user(file,user):
+    con = sqlite3.connect(file)
+    cur = con.cursor()
     cur.execute("""
-                SELECT * FROM Users
-                WHERE UUID = ID;
-""")
+                (SELECT * FROM Users
+                WHERE UUID = ?);
+                """,
+                (user.UUID))
 
 # remove the apt listing
-def remove_group(file,ID):
+def remove_group(file, user):
+    con = sqlite3.connect(file)
+    cur = con.cursor()
     cur.execute("""
                 DELETE FROM Groups
-                WHERE UUID = ID;
-""")
+                WHERE UUID = ?;
+                """,
+                (user.UUID))
 
     
 # create_table()
