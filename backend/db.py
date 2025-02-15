@@ -81,7 +81,7 @@ def add_group(file,group):
                     SQUAREFOOTAGE)
                 VALUES (?,?,?,?,?,?,?,?,?)
                 """,
-                (group.UUID, group.USERS, group.LINK, group.IMAGES, group.BEDCOUNT,group.BATHCOUNT ,group.RENT ,group.ADDRESS, group.SQUAREFOOTAGE))
+                (group.UUID, group.users, group.link, group.images, group.bedCount,group.bathCount ,group.rent ,group.address, group.sqFt))
     
 # add the user into the apt group    
 def insert_user_group(file, user):
@@ -89,8 +89,10 @@ def insert_user_group(file, user):
     cur = con.cursor()
     cur.execute("""
                 INSERT INTO Groups VALUES
-                    (USERS);            
-                """)
+                    (USERS)
+                VALUES(?);            
+                """,
+                (user.users))
 
 # update the values of apt
 def update_group(file,group):
@@ -110,14 +112,15 @@ def update_group(file,group):
                 SQUAREFOOTAGE = ?
             WHERE UUID = ?
                 """,
-                (group.UUID, group.USERS, group.LINK, group.IMAGES, group.BEDCOUNT, group.BATHCOUNT, group.RENT, group.ADDRESS, group.SQUAREFOOTAGE, group.UUID))
+                (group.UUID, group.users, group.link, group.images, group.bedCount, group.bathCount, group.rent, group.adress, group.sqFt, group.UUID))
     
-#get all apts
+# get all apts
 def fetch_all_groups(file):
     con = sqlite3.connect(file)
     cur = con.cursor()
     return cur.execute("""SELECT * FROM Groups;""")
 
+# get all users
 def fetch_user(file,user):
     con = sqlite3.connect(file)
     cur = con.cursor()
@@ -130,6 +133,10 @@ def fetch_user(file,user):
 
 def verify(file, email, password):
     return cur.execute()
+
+# def fetch_user_groups(file,user,groups):
+#     con = sqlite3.connect(file)
+#     cur = con.cursor()
 
 # remove the apt listing
 def remove_group(file, user):
