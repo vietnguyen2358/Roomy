@@ -2,3 +2,4 @@ macEnv/
 database.db
 constants.py
 .vscode/
+winEnv/
