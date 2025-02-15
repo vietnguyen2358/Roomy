@@ -11,6 +11,18 @@ class User:
         self.email = email
         self.password = password
 
+class Group:
+    def __init__(self, UUID, users, link, images, bedCount, bathCount, rent, address, sqFt):
+        self.UUID = UUID
+        self.users = users
+        self.link = link
+        self.images = images
+        self.bedCount = bedCount
+        self.bathCount = bathCount
+        self.rent = rent
+        self.address = address
+        self.sqFt = sqFt
+
 def create_table():
     cur.executescript("""
                       BEGIN;
