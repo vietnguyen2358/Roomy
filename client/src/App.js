@@ -6,7 +6,7 @@ import Home from "./components/pages/Home/Home";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Routes>
         {/* For Mobile <Navigate to="/auth" replace /> */}
         <Route path="/" element={<Home />} />
