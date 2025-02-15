@@ -1,4 +1,5 @@
 import sqlite3
+import tabulate
 
 class User:
     def __init__(self, UUID, firstName, lastName, email, password):
@@ -20,6 +21,12 @@ class Group:
         self.address = address
         self.sqFt = sqFt
 
+def print_table(user):
+    headers = ["UUID", "First Name", "Last Name", "Email", "Password"]
+    user_data = fetch_user("database.db", user)
+
+    print(tabulate(user_data, headers=headers, tablefmt="grid"))
+
 def create_table():
     con = sqlite3.connect("database.db")
     cur = con.cursor()
@@ -28,7 +35,7 @@ def create_table():
                       CREATE TABLE IF NOT EXISTS Users(UUID TEXT PRIMARY KEY UNIQUE,
                                                     FIRST_NAME TEXT,
                                                     LAST_NAME TEXT,
-                                                    EMAIL TEXT,
+                                                    EMAIL TEXT UNIQUE,
                                                     PASSWORD TEXT);
                       CREATE TABLE IF NOT EXISTS Groups(UUID TEXT PRIMARY KEY UNIQUE,
                                          LINK TEXT,
@@ -115,10 +122,14 @@ def fetch_user(file,user):
     con = sqlite3.connect(file)
     cur = con.cursor()
     cur.execute("""
-                (SELECT * FROM Users
-                WHERE UUID = ?);
-                """,
-                (user.UUID))
+                SELECT * FROM Users
+                WHERE UUID = ?;
+            """, 
+            (user.UUID))
+    return cur.fetchall()
+
+def verify(file, email, password):
+    return cur.execute()
 
 # remove the apt listing
 def remove_group(file, user):
