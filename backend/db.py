@@ -165,6 +165,7 @@ def fetch_user(file,user):
 def verify(file, email, password):
     return cur.execute()
 
+# get all groups the user is in
 def fetch_user_groups(file,user,group):
     con = sqlite3.connect(file)
     cur = con.cursor()
