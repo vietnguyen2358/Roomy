@@ -221,6 +221,26 @@ html {
   align-items: center;
 }
 
+.home-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+.home-container__auth-bg {
+  position: absolute;
+  top: -5vh;
+  left: -5vh;
+}
+.home-container__auth-img {
+  position: absolute;
+  top: 35vh;
+  left: 0;
+  width: 50vw;
+  height: 50vh;
+  z-index: 1000;
+  object-fit: contain;
+}
+
 body {
   overflow-x: hidden;
 }/*# sourceMappingURL=main.css.map */
