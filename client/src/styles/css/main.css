@@ -241,6 +241,39 @@ html {
   object-fit: contain;
 }
 
+/* button Design */
+.button {
+  background-color: transparent;
+  color: black;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sidebar {
+  background-color: #00002B;
+  width: 320px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  padding: 30px;
+  text-align: left;
+  font-family: "Pacifico", serif;
+  font-size: xx-large;
+}
+.sidebar__logo {
+  width: 20px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.line {
+  width: 255px;
+  margin-left: 0px;
+}
+
 body {
   overflow-x: hidden;
 }/*# sourceMappingURL=main.css.map */
