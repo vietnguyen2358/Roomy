@@ -3,56 +3,112 @@
 /* button Design */
 
 .button {
-    background-color: transparent;
-    color: black;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+  background-color: transparent;
+  color: black;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 .sidebar {
-    background-color: #00002B;
-    width: 320px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    color: white;
-    padding: 30px;
-    text-align: left;
+  background-color: #00002b;
+  width: 20vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: $spacer $spacer-small * 1.25;
+
+  &__title {
+    font-size: $main-fs;
     font-family: $font;
-    font-size: xx-large;
+    text-align: left;
+    color: white;
+  }
 
-    &__logo {
-        width: 20px;
-        height: 30px;
-        margin-right: 10px;        
-      }
-    &__menu {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        font-size: small;
-        
-        button {
-            background: $secondary-color;
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-    
-            &:hover {
-            background: lighten($secondary-color, 10%);
-            }
-        }
+  &__logo {
+    $s: 2.5rem;
+    width: $s;
+    height: $s;
+    margin-right: $spacer-small;
+  }
+}
+
+hr {
+  width: 100%;
+  border-color: rgba(#eeeeee, 0.25);
+  margin-top: $spacer-small * 1.25;
+}
+
+.sidebar__profile-box {
+  margin-top: $spacer;
+  margin-bottom: $spacer * 1.25;
+}
+
+.sidebar__profile {
+  $s: 7.5rem;
+  width: $s;
+  height: $s;
+  background: white;
+  border-radius: 50%;
+}
+
+.sidebar__username {
+  text-align: center;
+  color: white;
+  background: $dark-primary;
+  padding: $spacer-small * 0.35 $spacer;
+  border-radius: 25px;
+  font-weight: 500;
+  margin-top: $spacer-small;
+  font-size: $main-fs * 0.6;
+}
+
+.sidebar__link {
+  background: rgba(#1976d2, 0.1);
+  padding: $spacer-small;
+  color: white;
+  text-decoration: none;
+  margin-bottom: $spacer-small;
+  font-size: $main-fs * 0.6;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: all 200ms ease-out;
+
+  svg {
+    $s: 1rem;
+    width: $s;
+    height: $s;
+    margin-right: $spacer-small;
+
+    path {
+      fill: white;
     }
-    
+  }
+
+  &:hover {
+    background: #1976d2;
+  }
 }
 
-.line{
-    width: 255px;
-    margin-left: 0px;   
+.sidebar__link-active {
+  background: rgba(#1976d2, 0.35);
 }
 
+.sidebar__logout {
+  outline: none;
+  border: none;
+  background: $red;
+  color: white;
+  padding: $spacer-small * 0.5 $spacer;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 200ms ease-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(0.95);
+    background: $dark-red;
+  }
+}

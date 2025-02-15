@@ -1,7 +1,10 @@
 import React from "react";
 
+// Contexts
+import { GlobalContextProvider } from "./Global/Global.context";
+
 function ContextProvider(props) {
-  return <div>{props.children}</div>;
+  return <GlobalContextProvider>{props.children}</GlobalContextProvider>;
 }
 
 export default ContextProvider;

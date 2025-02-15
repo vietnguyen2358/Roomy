@@ -1,16 +1,7 @@
-import React from 'react'
-import Sidebar from "../../layout/navbar"
-
+import React from "react";
 
 function Home() {
-  return (
-    <div>
-
-    <Sidebar />
-    </div>
-    
-    
-  )
+  return <div className="home-container"></div>;
 }
 
-export default Home
+export default Home;

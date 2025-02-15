@@ -4,6 +4,7 @@
   position: relative;
   width: 100vw;
   height: 100vh;
+  overflow-y: hidden;
 
   &__auth-bg {
     position: absolute;
@@ -13,11 +14,147 @@
 
   &__auth-img {
     position: absolute;
-    top: 35vh;
+    top: 40vh;
     left: 0;
     width: 50vw;
     height: 50vh;
     z-index: 1000;
     object-fit: contain;
+  }
+
+  &__title {
+    position: absolute;
+    top: 15vh;
+    left: 7.5vw;
+    z-index: 200;
+    color: white;
+
+    h1 {
+      font-family: $font;
+      font-size: $md-fs * 1.65;
+      font-weight: 500;
+      margin-bottom: $spacer-small;
+    }
+
+    h2 {
+      font-size: $main-fs;
+      font-weight: 400;
+    }
+  }
+}
+
+.auth-form {
+  height: 100vh;
+  width: 30vw;
+  position: absolute;
+  right: 10vw;
+  top: 10vh;
+
+  &__title {
+    font-size: $main-fs * 1.25;
+    text-align: center;
+    margin-bottom: $spacer;
+  }
+
+  &__input-box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $spacer;
+
+    label {
+      font-size: $main-fs * 0.6;
+      font-weight: 500;
+      margin-bottom: $spacer-small * 0.5;
+    }
+
+    input {
+      outline: none;
+      border: 1px solid rgba(#eeeeee, 0.93);
+      padding: $spacer-small * 0.75;
+      border-radius: 10px;
+      font-size: $main-fs * 0.5;
+      transition: all 100ms ease-out;
+
+      &:focus {
+        border: 2px solid $primary;
+      }
+    }
+  }
+
+  &__show {
+    width: fit-content;
+    outline: none;
+    border: none;
+    background: transparent;
+    color: $primary;
+    margin-top: $spacer-small * 0.5;
+    font-weight: bold;
+    transition: all 200ms ease-out;
+
+    &:hover {
+      cursor: pointer;
+      color: $dark-primary;
+    }
+  }
+
+  &__error {
+    font-size: $main-fs * 0.5;
+    color: red;
+    background: rgba(#ff6161, 0.5);
+    padding: $spacer-small * 0.45;
+    border-radius: 5px;
+    margin-top: $spacer-small * 0.75;
+    font-weight: 500;
+    line-height: $spacer-small;
+  }
+
+  &__error-box {
+    input {
+      border-color: $red;
+    }
+  }
+
+  &__valid-box {
+    input {
+      border: 2px solid $green;
+    }
+  }
+
+  &__submit {
+    display: block;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: $main-fs * 0.6;
+    background: $primary;
+    font-weight: bold;
+    border-radius: 25px;
+    padding: $spacer-small * 0.5 $spacer-md;
+    margin: 0 auto;
+    transition: all 300ms ease-out;
+
+    &:hover {
+      cursor: pointer;
+      background: $dark-primary;
+      transform: scale(0.9);
+    }
+  }
+
+  &__link {
+    display: block;
+    color: #808080;
+    font-size: $main-fs * 0.6;
+    text-align: center;
+    text-decoration: none;
+    margin-top: $spacer;
+
+    span {
+      color: $primary;
+      font-weight: 500;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

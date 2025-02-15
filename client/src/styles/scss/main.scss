@@ -3,6 +3,9 @@
 @import "setup/vars";
 @import "utils/alignments";
 
+// Standalone
+@import "./standalone/spinner";
+
 // Pages
 @import "./pages/auth/auth";
 @import "./pages/home/home";

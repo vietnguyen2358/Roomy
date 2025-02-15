@@ -1,16 +1,16 @@
 import React from "react";
 
 // Schemas
-import { SignUpSchema } from "../../../schemas/UserSchemas";
+import { SignInSchema } from "../../../schemas/UserSchemas";
 
-// Context
+// Contexts
 import { useGlobal } from "../../../context/Global/Global.context";
 
 // Components
 import AuthForm from "../../layout/auth/AuthForm";
 import AuthContainer from "../../layout/auth/AuthContainer";
 
-function SignUp() {
+function SignIn() {
   const { showLoading } = useGlobal();
 
   return (
@@ -18,14 +18,12 @@ function SignUp() {
       <AuthForm
         initialValues={{
           email: "",
-          username: "",
           password: "",
-          confirmPassword: "",
         }}
-        isSignUp={true}
-        schema={SignUpSchema}
+        isSignUp={false}
+        schema={SignInSchema}
         onSubmit={(values, { errors, resetForm }) => {
-          showLoading("Creating your new account...");
+          showLoading("Signing in to your account...");
           console.log(values);
         }}
       />
@@ -33,4 +31,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default SignIn;
