@@ -83,6 +83,12 @@ def update_group(file,group):
 def fetch_all_groups():
     return cur.execute("""SELECT * FROM Groups;""")
 
+def fetch_user(file,ID):
+    cur.execute("""
+                SELECT * FROM Users
+                WHERE UUID = ID;
+""")
+
 # remove the apt listing
 def remove_group(file,ID):
     cur.execute("""
