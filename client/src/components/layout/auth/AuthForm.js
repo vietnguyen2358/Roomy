@@ -1,5 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
+import FormInput from "./FormInput";
 
 function AuthForm(props) {
   const { isSignUp, initialValues } = props;
@@ -14,9 +15,9 @@ function AuthForm(props) {
   return (
     <div className="auth-form">
       <form onSubmit={formik.handleSubmit} className="">
-        <h1 className="auth-form__title">
-          Sign Up
-        </h1>
+        <h1 className="auth-form__title">{isSignUp ? "Sign Up" : "Sign In"}</h1>
+
+        <FormInput />
       </form>
     </div>
   );
