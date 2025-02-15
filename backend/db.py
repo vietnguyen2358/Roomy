@@ -118,7 +118,8 @@ def update_group(file,group):
 def fetch_all_groups(file):
     con = sqlite3.connect(file)
     cur = con.cursor()
-    return cur.execute("""SELECT * FROM Groups;""")
+    cur.execute("""SELECT * FROM Groups;""")
+    return cur.fetchall()
 
 # get all users
 def fetch_user(file,user):
@@ -134,9 +135,14 @@ def fetch_user(file,user):
 def verify(file, email, password):
     return cur.execute()
 
-# def fetch_user_groups(file,user,groups):
-#     con = sqlite3.connect(file)
-#     cur = con.cursor()
+def fetch_user_groups(file,user,group):
+    con = sqlite3.connect(file)
+    cur = con.cursor()
+    cur.execute("""
+                SELECT * FROM Groups
+                WHERE ? = ?
+                """,
+                (user.UUID, group.users))
 
 # remove the apt listing
 def remove_group(file, user):
