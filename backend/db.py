@@ -31,7 +31,7 @@ def create_table():
                                                     LAST_NAME TEXT,
                                                     EMAIL TEXT,
                                                     PASSWORD TEXT);
-                      CREATE TABLE Groups(UUID TEXT PRIMARY KEY UNIQUE,
+                      CREATE TABLE IF NOT EXISTS Groups(UUID TEXT PRIMARY KEY UNIQUE,
                                          LINK TEXT,
                                          IMAGES TEXT,
                                          BEDCOUNT INTEGER,
@@ -44,7 +44,7 @@ def create_table():
     """)
 
 # creates new user 
-def insert_user(file,user):
+def insert_user(file, user):
     cur.execute("""
                 INSERT INTO Users VALUES
                     (UUID,
@@ -52,9 +52,11 @@ def insert_user(file,user):
                     Last,
                     Email,
                     Password)
-""")
+                VALUES (?, ?, ?, ?, ?)
+                """,
+                (user.UUID, user.firstName, user.lastName, user.email, user.password))
     
-# creates a new apt listing    
+# creates a new apt listing
 def add_group(file,group):
     cur.execute("""
                 INSERT INTO Groups VALUES
