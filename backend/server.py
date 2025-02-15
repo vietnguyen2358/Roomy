@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import uuid 
 from constants import APIFYKEY
 from apify_client import ApifyClient
-from db import User, insert_user
+from db import User, insert_user, verify, User
 
 class Req (BaseModel):
     id: str = None
@@ -38,6 +38,10 @@ async def addUser(request : Req):
     userObject.insert_user(getDBFile(), userObject)
     insert_user(getDBFile(), userObject)
     pass
+
+@app.get("/verifyUser")
+async def verifyUser():
+    return verify(file, email, password)
 
 @app.get("/ZillowInfo")
 async def getZillowInfo():
