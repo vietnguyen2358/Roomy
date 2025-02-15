@@ -5,16 +5,20 @@ def create_table():
     cur = con.cursor()
     cur.executescript("""
                       BEGIN;
-                      CREATE TABLE Users(UUID, First name, Last name,Email,Password);
-                      CREATE TABLE Groups(UUID,
-                                         USERS,
-                                         LINK,
-                                         IMAGES,
-                                         BEDCOUNT,
-                                         BATHCOUNT,
-                                         RENT,
-                                         ADDRESS,
-                                         SQUAREFOOTAGE);   
+                      CREATE TABLE IF NOT EXISTS Users(UUID TEXT PRIMARY KEY UNIQUE,
+                                                    FIRST_NAME TEXT,
+                                                    LAST_NAME TEXT,
+                                                    EMAIL TEXT,
+                                                    PASSWORD TEXT);
+                      CREATE TABLE Groups(UUID TEXT PRIMARY KEY UNIQUE,
+                                         LINK TEXT,
+                                         IMAGES TEXT,
+                                         BEDCOUNT INTEGER,
+                                         BATHCOUNT INTEGER,
+                                         RENT FLOAT,
+                                         ADDRESS TEXT,
+                                         SQUAREFOOTAGE INTEGER,
+                                         FOREIGN KEY (USERS) REFERENCES Users(UUID));   
                       COMMIT;    
     """)
 
