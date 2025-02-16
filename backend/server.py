@@ -35,7 +35,6 @@ async def addUser(request : Req):
     print(request.password)
     print(request.email)
     userObject = User(UUID = request.id, firstName = request.firstName, lastName = request.lastName, email = request.email, password = request.password)
-    userObject.insert_user(getDBFile(), userObject)
     insert_user(getDBFile(), userObject)
     print_user(userObject)
     return {"Success": True}
