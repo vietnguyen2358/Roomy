@@ -163,10 +163,19 @@ def fetch_user(file, user):
         con.close()
 
 def verify(file, email, password):
-    return cur.execute()
+    try:
+        con = sqlite3.connect(file)
+        cur = con.cursor()
+        cur.execute("""
+                    """)
+
+    except sqlite3.Error as e:
+        print(f"User Verification Error: {e}")
+    finally:
+        con.close()
 
 # # get all groups the user is in
-def fetch_user_groups(file, user, group):
+# def fetch_user_groups(file, user, group):
 #     con = sqlite3.connect(file)
 #     cur = con.cursor()
 #     cur.execute("""
