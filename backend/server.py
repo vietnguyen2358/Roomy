@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import uuid 
 from constants import APIFYKEY
 from apify_client import ApifyClient
-from db import User, insert_user, verify, User, print_user, Group, fetch_group, fetch_all_groups, add_group, update_group, remove_group, get_group_by_url
+from db import User, insert_user, verify, User, print_user, Group, fetch_group, fetch_all_groups, add_group, update_group, remove_group, remove_user_from_group, get_group_by_url
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -125,7 +125,13 @@ async def updateGroup(request : Req):
     return {"Success": True}
 
 @app.delete("/deleteGroup")
-async def deleteGroup():
+async def deleteGroup(request : Req):
+    remove_group(getDBFile(), request.id)
+    return
+
+@app.delete("/deleteUserFromGroup")
+async def deleteUserFromGroup(request : Req):
+    # remove_user_from_group(getDBFile(), )
     return
 
 def getDBFile():
