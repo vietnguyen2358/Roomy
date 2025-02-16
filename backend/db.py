@@ -218,7 +218,7 @@ def verify(file, email, password):
         con = sqlite3.connect(file)
         cur = con.cursor()
         cur.execute("""
-                    SELECT PASSWORD FROM Users
+                    SELECT FIRST_NAME, LAST_NAME, PASSWORD FROM Users
                     WHERE EMAIL = ?
                     """,
                     (email,))
@@ -227,16 +227,17 @@ def verify(file, email, password):
         if row is None:
             print(f'No matching email found.')
             con.close()
-            return False
-        elif password == row[0]:
+            return None
+        elif password == row[2]:
             con.close()
-            return True
+            return [row[0], row[1]]
         else:
             print('Incorrect password.')
             con.close()
-            return False
+            return None
     except sqlite3.Error as e:
         print(f"User Verification Error: {e}")
+        return None
 
 # # get all groups the user is in
 # def fetch_user_groups(file, user, group):
