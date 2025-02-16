@@ -165,14 +165,14 @@ def update_group(file, group):
     finally:
         con.close()
 
-def fetch_all_groups(file, group):
+def fetch_group(file, groupUUID):
     try:
         con = sqlite3.connect(file)
         cur = con.cursor()
         cur.execute("""SELECT * FROM Groups
                         WHERE UUID = ?
                     """,
-                    (group.UUID,))
+                    (groupUUID,))
         data = cur.fetchone()
     except sqlite3.Error as e:
         print(f"Fetching All Group Error: {e}")
@@ -249,7 +249,7 @@ def verify(file, email, password):
 #                 (user.UUID, group.users))
 
 # remove the apt listing
-def remove_group(file, user):
+def remove_group(file, userUUID):
     try:
         con = sqlite3.connect(file)
         cur = con.cursor()
@@ -257,7 +257,7 @@ def remove_group(file, user):
                 DELETE FROM Groups
                 WHERE UUID = ?;
                 """,
-                (user.UUID))
+                (userUUID))
     except sqlite3.Error as e:
         print(f"Remove Group Error: {e}")
     finally:

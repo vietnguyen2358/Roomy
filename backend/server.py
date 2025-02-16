@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import uuid 
 from constants import APIFYKEY
 from apify_client import ApifyClient
-from db import User, insert_user, verify, User, print_user, Group, add_group
+from db import User, insert_user, verify, User, print_user, Group, fetch_group, fetch_all_groups, add_group, update_group, remove_group
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -71,14 +71,30 @@ async def getZillowInfo(request: Req):
             "latitude": data["latitude"],
             "longitude": data["longitude"],}
 
+@app.get("/fetchGroup")
+async def getGroup(request : Req):
+    return fetch_group(getDBFile(), request.id)
+
+@app.get("/fetchAllGroup")
+async def getAllGroup(request : Req):
+    return fetch_all_groups(getDBFile())
+
 @app.post("/addGroup")
-async def addUser(request : Req):
+async def addGroup(request : Req):
     request.id = str(uuid.uuid4())
     groupObject = Group(UUID = request.id, userIDs = request.userLists, link = request.zillowLink, images = request.imagesUrls, bedCount = request.bedCount, bathCount = request.bathCount, rent = request.rent, address = request.address)
     add_group(getDBFile(), groupObject)
     return {"Success": True}
 
-@app.post("/")
+@app.put("/updateGroup")
+async def updateGroup(request : Req):
+    groupObject = Group(UUID = request.id, userIDs = request.userLists, link = request.zillowLink, images = request.imagesUrls, bedCount = request.bedCount, bathCount = request.bathCount, rent = request.rent, address = request.address)
+    update_group(getDBFile(), groupObject)
+    return {"Success": True}
+
+@app.delete("/deleteGroup")
+async def deleteGroup():
+    return
 
 def getDBFile():
     return "database.db"
