@@ -30,11 +30,6 @@ function Navbar() {
       label: "Create Roomy Group",
       path: "/create",
     },
-    {
-      icon: <Settings />,
-      label: "Settings",
-      path: "/settings",
-    },
   ];
 
   return (
