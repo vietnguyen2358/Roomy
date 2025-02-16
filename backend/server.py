@@ -21,6 +21,8 @@ class Req (BaseModel):
     bedCount: int = None
     bathCount: int = None
     address: str = None
+    longtitude: float = None
+    latitude: float = None
 
 
 app = FastAPI()
@@ -82,13 +84,31 @@ async def getAllGroup(request : Req):
 @app.post("/addGroup")
 async def addGroup(request : Req):
     request.id = str(uuid.uuid4())
-    groupObject = Group(UUID = request.id, userIDs = request.userLists, link = request.zillowLink, images = request.imagesUrls, bedCount = request.bedCount, bathCount = request.bathCount, rent = request.rent, address = request.address)
+    groupObject = Group(UUID = request.id, 
+                        userIDs = request.userLists, 
+                        link = request.zillowLink, 
+                        images = request.imagesUrls, 
+                        bedCount = request.bedCount, 
+                        bathCount = request.bathCount, 
+                        rent = request.rent, 
+                        address = request.address,
+                        longitude = request.longtitude,
+                        latitude = request.latitude)
     add_group(getDBFile(), groupObject)
     return {"Success": True}
 
 @app.put("/updateGroup")
 async def updateGroup(request : Req):
-    groupObject = Group(UUID = request.id, userIDs = request.userLists, link = request.zillowLink, images = request.imagesUrls, bedCount = request.bedCount, bathCount = request.bathCount, rent = request.rent, address = request.address)
+    groupObject = Group(UUID = request.id, 
+                        userIDs = request.userLists, 
+                        link = request.zillowLink, 
+                        images = request.imagesUrls, 
+                        bedCount = request.bedCount, 
+                        bathCount = request.bathCount, 
+                        rent = request.rent, 
+                        address = request.address,
+                        longitude = request.longtitude,
+                        latitude = request.latitude)
     update_group(getDBFile(), groupObject)
     return {"Success": True}
 

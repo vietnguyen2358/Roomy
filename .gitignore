@@ -3,3 +3,4 @@ database.db
 constants.py
 .vscode/
 winEnv/
+__pycache__/
