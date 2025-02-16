@@ -1,5 +1,5 @@
 import sqlite3
-import tabulate
+from tabulate import tabulate
 
 class User:
     def __init__(self, UUID, firstName, lastName, email, password):
@@ -63,10 +63,10 @@ def insert_user(file, user):
         cur.execute("""
                 INSERT INTO Users
                     (UUID,
-                    First,
-                    Last,
-                    Email,
-                    Password)
+                    FIRST_NAME,
+                    LAST_NAME,
+                    EMAIL,
+                    PASSWORD)
                 VALUES (?, ?, ?, ?, ?)
                 """,
                 (user.UUID, user.firstName, user.lastName, user.email, user.password))
