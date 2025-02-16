@@ -140,8 +140,8 @@ def insert_user_group(file, userUUID, groupUUID):
                     WHERE UUID = ?         
                 """,
                 (groupUUID,))
-        userIDs = cur.fetchone().split(',')
-
+        userIDs = cur.fetchone()
+        userIDs = userIDs[0].split(',')
         userIDs.append(userUUID)
         cur.execute("""
                 UPDATE Groups
