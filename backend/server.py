@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import uuid 
 from constants import APIFYKEY
 from apify_client import ApifyClient
-from db import User, insert_user, verify, User, print_user, Group, fetch_group, fetch_all_groups, add_group, update_group, remove_group
+from db import User, insert_user, verify, User, print_user, Group, fetch_group, fetch_all_groups, add_group, update_group, remove_group, get_group_by_url
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -52,6 +52,17 @@ async def verifyUser(request : Req):
 
 @app.post("/ZillowInfo")
 async def getZillowInfo(request: Req):
+    
+    info = get_group_by_url(getDBFile(), request.zillowLink)
+    if info is not None:
+        return {"address": info[6], 
+            "bedCount": info[3], 
+            "bathCount": info[4], 
+            "rent": info[5], 
+            "price": 0,
+            "imagesUrls": info[2],
+            "latitude": info[8],
+            "longitude": info[7],}
     client = ApifyClient(APIFYKEY)
     url = request.zillowLink
     run_input = {
