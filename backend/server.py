@@ -22,7 +22,7 @@ class Req (BaseModel):
     bedCount: int = None
     bathCount: int = None
     address: str = None
-    longtitude: float = None
+    longitude: float = None
     latitude: float = None
 
 
@@ -104,7 +104,7 @@ async def addGroup(request : Req):
                         bathCount = request.bathCount, 
                         rent = request.rent, 
                         address = request.address,
-                        longitude = request.longtitude,
+                        longitude = request.longitude,
                         latitude = request.latitude)
     add_group(getDBFile(), groupObject)
     return {"Success": True}
@@ -119,7 +119,7 @@ async def updateGroup(request : Req):
                         bathCount = request.bathCount, 
                         rent = request.rent, 
                         address = request.address,
-                        longitude = request.longtitude,
+                        longitude = request.longitude,
                         latitude = request.latitude)
     update_group(getDBFile(), groupObject)
     return {"Success": True}
