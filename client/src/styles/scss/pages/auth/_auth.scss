@@ -154,13 +154,10 @@
     }
 
     &:hover {
-transform: translate()
-text-decoration: underline;
+      text-decoration: underline;
     }
   }
 }
-
-
 
 // Media Query
 @import "./auth.mq";
