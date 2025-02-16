@@ -276,16 +276,41 @@ def verify(file, email, password):
 #                 (user.UUID, group.users))
 
 # remove the user from group
-def remove_group(file, groupUUID, userUUID):
+def remove_user_from_group(file, groupUUID, userUUID):
     try:
         con = sqlite3.connect(file)
         cur = con.cursor()
-        group = fetch_group(file, groupUUID)
         cur.execute("""
-                DELETE FROM Groups
+                SELECT USER_UUIDS FROM Groups
+                    WHERE UUID = ?         
+                """,
+                (groupUUID,))
+        userIDs = cur.fetchone().split(',')
+
+        if userUUID in userIDs:
+            userIDs.remove(userUUID)
+
+        cur.execute("""
+                UPDATE Groups
+                SET USER_UUIDS = ?
                 WHERE UUID = ?;
                 """,
-                (userUUID))
+                (','.join(userIDs), groupUUID))
+        con.commit()
+    except sqlite3.Error as e:
+        print(f"Remove User from Group Error: {e}")
+    finally:
+        con.close()
+
+# Can also implement ownership transfer
+def remove_group(file, groupUUID):
+    try:
+        con = sqlite3.connect(file)
+        cur = con.cursor()
+        cur.execute("""DELETE FROM Groups
+                        WHERE UUID = ?
+                    """,
+                    (groupUUID,))
     except sqlite3.Error as e:
         print(f"Remove Group Error: {e}")
     finally:
