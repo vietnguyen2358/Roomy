@@ -23,25 +23,32 @@ function SignIn() {
     <AuthContainer>
       <AuthForm
         initialValues={{
-          email: "",
-          password: "",
+          email: "jordandt123411@gmail.com",
+          password: "Password123411$",
         }}
         isSignUp={false}
         schema={SignInSchema}
-        onSubmit={(values, { errors, resetForm }) => {
+        onSubmit={(values, { setErrors, resetForm }) => {
           showLoading("Signing in to your account...");
           signInUser(values, (data, err) => {
             if (err) return console.log(err);
+            if (!data.Success) {
+              setErrors({
+                password: "Incorrect email or password.",
+              });
 
-            const { Success } = data;
-            const uid = Success[0];
-            const firstName = Success[1];
-            const lastName = Success[2];
-            updateUser({ email: values.email, firstName, lastName, uid });
-            signUserIn();
-            closeLoading();
-            resetForm();
-            navigate("/");
+              closeLoading();
+            } else {
+              const { Success } = data;
+              const uid = Success[0];
+              const firstName = Success[1];
+              const lastName = Success[2];
+              updateUser({ email: values.email, firstName, lastName, uid });
+              signUserIn();
+              closeLoading();
+              resetForm();
+              navigate("/");
+            }
           });
         }}
       />

@@ -12,13 +12,15 @@ export const GlobalContextProvider = (props) => {
   const [houseCardState, setHouseCardState] = useState({
     show: false,
     data: null,
+    refetch: null,
   });
 
-  const showHouseCard = (data) => {
+  const showHouseCard = (data, refetch) => {
     const updatedUserList = data.userLists.split(",");
     setHouseCardState({
       show: true,
       data: { ...data, userLists: updatedUserList },
+      refetch,
     });
   };
 

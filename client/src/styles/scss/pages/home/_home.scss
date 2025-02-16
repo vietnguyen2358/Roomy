@@ -41,6 +41,12 @@ hr {
   height: $s;
   background: white;
   border-radius: 50%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
 }
 
 .sidebar__username {
@@ -102,14 +108,18 @@ hr {
   }
 }
 
+.home-row {
+  align-items: flex-start;
+}
+
 .filter {
   background: #f9f9f9;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 100%;
-  max-width: 350px;
+  width: 25vw;
+  margin-left: $spacer-md;
 
   &__title {
     font-size: 18px;
@@ -194,6 +204,17 @@ hr {
   }
 }
 
+.browse__none {
+  margin-top: $spacer;
+  color: #808080;
+
+  span {
+    color: $primary;
+    font-family: $font;
+    font-size: $main-fs * 0.85;
+  }
+}
+
 // Search Bar
 .home-main {
   width: 42.5vw;
@@ -243,7 +264,6 @@ hr {
 }
 
 .browse-info {
-  // margin-right: $spacer-md;
   background: white;
   width: 20vw;
   min-height: 40vh;
@@ -291,19 +311,27 @@ hr {
 }
 
 .active-card {
+  position: relative;
   align-items: flex-start;
   background: white;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 0 5px 1px rgba(black, 0.5);
 
+  .between-row {
+    flex-direction: column;
+    height: 50vh;
+    padding: $spacer-small * 1.25;
+  }
+
   img {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
   }
 
   .house-info__box {
     min-width: 20vw;
-    padding: $spacer-small * 1.25;
+    height: 100%;
+    padding: 0;
   }
 
   .house-info__rent {
@@ -314,5 +342,62 @@ hr {
     font-size: $main-fs * 0.75;
     margin-top: $spacer-small * 0.85;
     margin-bottom: $spacer-small;
+  }
+
+  &__btn {
+    outline: none;
+    border: none;
+    background: $red;
+    color: white;
+    border-radius: 25px;
+    font-weight: bold;
+    padding: $spacer-small * 0.5 $spacer-md;
+    transition: all 200ms ease-out;
+
+    &:hover {
+      cursor: pointer;
+      background: $dark-red;
+    }
+  }
+
+  .active-card__join {
+    background: $primary;
+
+    &:hover {
+      background: $dark-primary;
+    }
+  }
+}
+
+.house-info__members {
+  margin-top: $spacer-small;
+  font-weight: bold;
+}
+
+.active-card__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  outline: none;
+  border: none;
+  background: transparent;
+
+  svg {
+    $s: 1rem;
+    width: $s;
+    height: $s;
+
+    path {
+      fill: #808080;
+      transition: all 200ms ease-out;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    svg path {
+      fill: $primary;
+    }
   }
 }

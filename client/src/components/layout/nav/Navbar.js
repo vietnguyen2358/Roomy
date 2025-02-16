@@ -30,11 +30,6 @@ function Navbar() {
       label: "Create Roomy Group",
       path: "/create",
     },
-    {
-      icon: <Settings />,
-      label: "Settings",
-      path: "/settings",
-    },
   ];
 
   return (
@@ -54,7 +49,10 @@ function Navbar() {
         {/* Profile */}
         <div className="sidebar__profile-box center-vertical">
           <div className="sidebar__profile center">
-            <AddPic />
+            <img
+              src={process.env.PUBLIC_URL + "/assets/images/profilepic.jpg"}
+              alt="profile-pic"
+            />
           </div>
           <p className="sidebar__username">
             {user.firstName + " " + user.lastName}

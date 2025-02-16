@@ -40,6 +40,27 @@ export const APIContextProvider = (props) => {
         return null;
       });
 
+  // Join Group
+  const joinGroup = (uid, groupID, cb) =>
+    Axios.put(REACT_APP_API_URI + "/newGroupUser", { id: uid, groupID })
+      .then((res) => cb(res.data, null))
+      .catch((err) => cb(null, err));
+
+  // Delete Group
+  const deleteGroup = (groupID, cb) =>
+    Axios.post(REACT_APP_API_URI + "/deleteGroup", { groupID })
+      .then((res) => cb(res.data, null))
+      .catch((err) => cb(null, err));
+
+  // Delete User From Group
+  const deleteUserFromGroup = (uid, groupID, cb) =>
+    Axios.post(REACT_APP_API_URI + "/deleteUserFromGroup", {
+      id: uid,
+      groupID,
+    })
+      .then((res) => cb(res.data, null))
+      .catch((err) => cb(null, err));
+
   return (
     <APIContext.Provider
       value={{
@@ -48,6 +69,9 @@ export const APIContextProvider = (props) => {
         signInUser,
         createGroup,
         fetchAllGroups,
+        joinGroup,
+        deleteGroup,
+        deleteUserFromGroup,
       }}
     >
       {props.children}

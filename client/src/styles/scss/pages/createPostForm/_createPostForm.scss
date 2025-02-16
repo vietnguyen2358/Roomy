@@ -13,6 +13,7 @@
     right: 0;
     bottom: 0;
     background: rgba(black, 0.5);
+    z-index: 100;
   }
 }
 
@@ -60,7 +61,7 @@
 }
 
 .house-shadow {
-  background: rgba(black, 0.25) !important;
+  background: rgba(black, 0.15) !important;
 }
 
 .house-info {
@@ -83,7 +84,8 @@
     padding: $spacer-small;
   }
 
-  &__rent {
+  &__rent,
+  &__sub-rent {
     font-weight: bold;
     font-size: $main-fs * 0.75;
     margin-bottom: $spacer-small * 0.5;
@@ -93,6 +95,12 @@
       font-size: $main-fs * 0.6;
       font-weight: 400;
     }
+  }
+
+  &__sub-rent {
+    font-size: $main-fs * 0.65;
+    color: $primary;
+    margin-top: $spacer-small * 0.75;
   }
 
   &__address {
@@ -141,3 +149,4 @@
     }
   }
 }
+
