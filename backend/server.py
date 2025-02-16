@@ -129,12 +129,12 @@ async def updateGroup(request : Req):
     update_group(getDBFile(), groupObject)
     return {"Success": True}
 
-@app.delete("/deleteGroup")
+@app.post("/deleteGroup")
 async def deleteGroup(request : Req):
     remove_group(getDBFile(), request.groupID)
     return {"Success": True}
 
-@app.delete("/deleteUserFromGroup")
+@app.post("/deleteUserFromGroup")
 async def deleteUserFromGroup(request : Req):
     remove_user_from_group(getDBFile(), request.groupID, request.id)
     return {"Success": True}
