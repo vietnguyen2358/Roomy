@@ -260,7 +260,7 @@ def verify(file, email, password):
         else:
             print('Incorrect password.')
             con.close()
-            return None
+            return False
     except sqlite3.Error as e:
         print(f"User Verification Error: {e}")
         return None
