@@ -2,11 +2,11 @@ import react from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 // SVGs
-import AddPic from "../svg/AddPic";
-import Settings from "../svg/Settings";
-import Search from "../svg/Search";
-import Group from "../svg/Group";
-import Add from "../svg/Add";
+import AddPic from "../../svg/AddPic";
+import Settings from "../../svg/Settings";
+import Search from "../../svg/Search";
+import Group from "../../svg/Group";
+import Add from "../../svg/Add";
 
 function Navbar() {
   const { pathname } = useLocation();
@@ -64,6 +64,7 @@ function Navbar() {
 
             return (
               <NavLink
+                key={label}
                 to={path}
                 className={`sidebar__link row ${
                   active ? "sidebar__link-active" : ""

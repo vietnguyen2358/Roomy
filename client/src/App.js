@@ -9,7 +9,7 @@ import Home from "./components/pages/Home/Home";
 import SignUp from "./components/pages/SignUp/SignUp";
 import SignIn from "./components/pages/SignIn/SignIn";
 import Spinner from "./components/standalone/Spinner/Spinner";
-import Navbar from "./components/layout/Navbar";
+import Navbar from "./components/layout/nav/Navbar";
 
 function App() {
   const { pathname } = useLocation();
