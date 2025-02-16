@@ -6,6 +6,7 @@ import { ZillowLinkSchema } from "../../../schemas/UserSchemas";
 
 // Contexts
 import { useGlobal } from "../../../context/Global/Global.context";
+import { useAPI } from "../../../context/API/API.context";
 
 // Components
 import FormInput from "../../layout/auth/FormInput";
@@ -13,7 +14,8 @@ import Search from "../../svg/Search";
 import MapBackground from "./MapBackground";
 
 function CreatePostForm() {
-  const { showLoading } = useGlobal();
+  const { showLoading, closeLoading } = useGlobal();
+  const { getZillowInfo } = useAPI();
   const formik = useFormik({
     initialValues: {
       zillowLink: "",
@@ -21,7 +23,12 @@ function CreatePostForm() {
     validationSchema: ZillowLinkSchema,
     onSubmit: (values) => {
       showLoading("Finding Zillow Information...");
-      console.log(values);
+      getZillowInfo(values.zillowLink, (data, err) => {
+        if (err) return console.log(err);
+
+        console.log(data);
+        closeLoading();
+      });
     },
   });
 

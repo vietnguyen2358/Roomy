@@ -46,7 +46,7 @@ export const ZillowLinkSchema = Yup.object().shape({
     .min(1, "A valid Zillow URL is required.")
     .max(500, "Your Zillow URL exceeds the character limit (500).")
     .matches(
-      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+      /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
       "Please enter a valid URL."
     )
     .required("A valid Zillow URL is required."),
