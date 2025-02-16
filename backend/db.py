@@ -106,7 +106,7 @@ def add_group(file, group):
                     RENT,
                     ADDRESS,
                     USER_UUIDS)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (group.UUID, group.link, group.images, group.bedCount, group.bathCount, group.rent, group.address, group.userIDs))
         con.commit()
