@@ -1,7 +1,7 @@
 import React from "react";
 
 // Components
-import Filter from "../../standalone/Filter";
+import Filter from "../../standalone/Filter/Filter";
 
 function Home() {
   return (

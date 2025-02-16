@@ -9,7 +9,16 @@
 // Pages
 @import "./pages/auth/auth";
 @import "./pages/home/home";
+@import "./pages/createPostForm/createPostForm";
 
 body {
   overflow-x: hidden;
+}
+
+.App {
+  display: flex;
+}
+
+.main-container {
+  padding: $spacer;
 }
