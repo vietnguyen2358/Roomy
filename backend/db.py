@@ -312,6 +312,7 @@ def remove_group(file, groupUUID):
                         WHERE UUID = ?
                     """,
                     (groupUUID,))
+        con.commit()
     except sqlite3.Error as e:
         print(f"Remove Group Error: {e}")
     finally:
