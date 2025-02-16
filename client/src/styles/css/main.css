@@ -513,6 +513,11 @@ hr {
   background: white;
   border-radius: 50%;
 }
+.sidebar__profile img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
 
 .sidebar__username {
   text-align: center;
