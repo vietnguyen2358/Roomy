@@ -1,14 +1,24 @@
-import React, { useEffect } from "react";
-import ReactMapboxGl, { Feature, Layer, Marker } from "react-mapbox-gl";
+import React, { useState, useEffect } from "react";
+import ReactMapboxGl from "react-mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-function MapBackground(props) {
-  const { dataLoaded, coordinates } = props;
-  const API_KEY =
-    "pk.eyJ1Ijoiam9yZGFuZHQyMiIsImEiOiJjbTc3MDAxdG0weXczMmxwdGc5dTZtcmUwIn0.iMOnqeVwdZI8QCY61Lm2Cw";
-  const Map = ReactMapboxGl({
-    accessToken: API_KEY,
-  });
+const Map = ReactMapboxGl({
+  accessToken: process.env.REACT_APP_MAPBOX_KEY,
+});
+
+function MapBackground({ dataLoaded, coordinates }) {
+  const defaultCoordinates = [-122.4194, 37.7749]; // Bay Area
+
+  // State to track map center & zoom
+  const [mapCenter, setMapCenter] = useState(defaultCoordinates);
+  const [mapZoom, setMapZoom] = useState([8]); // Start with zoom 8
+
+  useEffect(() => {
+    if (coordinates?.length && coordinates[0] !== 0 && coordinates[1] !== 0) {
+      setMapCenter(coordinates); // Update center
+      setMapZoom([22]); // Zoom in when valid coordinates are provided
+    }
+  }, [coordinates]); // Runs only when coordinates change
 
   return (
     <Map
@@ -17,18 +27,9 @@ function MapBackground(props) {
         height: "100%",
         width: "100%",
       }}
-      zoom={coordinates}
-    >
-      {dataLoaded ? (
-        <Layer type="symbol" id="marker" layout={{ "icon-image": "marker-15" }}>
-          <Feature coordinates={coordinates} />
-        </Layer>
-      ) : (
-        <Marker latitude={37.7749} longitude={-122.4194} anchor="bottom">
-          <div style={{ fontSize: "20px" }}>📍</div>
-        </Marker>
-      )}
-    </Map>
+      center={mapCenter}
+      zoom={mapZoom} // Dynamic zoom level
+    />
   );
 }
 
