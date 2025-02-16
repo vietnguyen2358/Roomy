@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 class Req (BaseModel):
     id: str = None
+    groupID: str = None
     firstName: str = None
     lastName: str = None
     password: str = None
@@ -94,9 +95,9 @@ async def getAllGroup(request : Req):
 
 @app.post("/addGroup")
 async def addGroup(request : Req):
-    request.id = str(uuid.uuid4())
-    groupObject = Group(UUID = request.id, 
-                        userIDs = request.userLists, 
+    request.groupID = str(uuid.uuid4())
+    groupObject = Group(UUID = request.groupID, 
+                        userIDs = request.id, 
                         link = request.zillowLink, 
                         images = request.imagesUrls, 
                         bedCount = request.bedCount, 
