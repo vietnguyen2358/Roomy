@@ -28,20 +28,21 @@ async def testPage():
 
 @app.post("/addUser") 
 async def addUser(request : Req):
-    request.id = uuid.uuid4()
+    request.id = str(uuid.uuid4())
     print(request.id)
     print(request.firstName)
     print(request.lastName)
     print(request.password)
     print(request.email)
     userObject = User(UUID = request.id, firstName = request.firstName, lastName = request.lastName, email = request.email, password = request.password)
+    print("testing", userObject.UUID, userObject.firstName, userObject.lastName, userObject.email, userObject.password)
     insert_user(getDBFile(), userObject)
-    print_user(userObject)
+    print_user(getDBFile(), userObject)
     return {"Success": True}
 
-@app.get("/verifyUser")
-async def verifyUser():
-    return {"Success" : verify(file, email, password)}
+@app.post("/verifyUser")
+async def verifyUser(request : Req):
+    return {"Success" : verify(getDBFile(), request.email, request.password)}
 
 @app.post("/ZillowInfo")
 async def getZillowInfo(request: Req):
