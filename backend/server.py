@@ -15,7 +15,7 @@ class Req (BaseModel):
     password: str = None
     email: str = None
     zillowLink: str = None
-    groupLists: str = None
+    userLists: str = None
     imagesUrls: str = None
     rent: float = None
     bedCount: int = None
@@ -70,6 +70,15 @@ async def getZillowInfo(request: Req):
             "imagesUrls": data["desktopWebHdpImageLink"],
             "latitude": data["latitude"],
             "longitude": data["longitude"],}
+
+@app.post("/addGroup")
+async def addUser(request : Req):
+    request.id = str(uuid.uuid4())
+    groupObject = Group(UUID = request.id, userIDs = request.userLists, link = request.zillowLink, images = request.imagesUrls, bedCount = request.bedCount, bathCount = request.bathCount, rent = request.rent, address = request.address)
+    add_group(getDBFile(), groupObject)
+    return {"Success": True}
+
+@app.post("/")
 
 def getDBFile():
     return "database.db"
