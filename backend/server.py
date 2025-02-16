@@ -87,7 +87,7 @@ async def getZillowInfo(request: Req):
 
 @app.get("/fetchGroup")
 async def getGroup(request : Req):
-    return fetch_group(getDBFile(), request.id)
+    return fetch_group(getDBFile(), request.groupID)
 
 @app.get("/fetchAllGroup")
 async def getAllGroup(request : Req):
