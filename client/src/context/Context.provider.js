@@ -3,11 +3,14 @@ import React from "react";
 // Contexts
 import { GlobalContextProvider } from "./Global/Global.context";
 import { APIContextProvider } from "./API/API.context";
+import { UserContextProvider } from "./User/User.context";
 
 function ContextProvider(props) {
   return (
     <GlobalContextProvider>
-      <APIContextProvider>{props.children}</APIContextProvider>
+      <APIContextProvider>
+        <UserContextProvider>{props.children}</UserContextProvider>
+      </APIContextProvider>
     </GlobalContextProvider>
   );
 }

@@ -1,6 +1,9 @@
 import react from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
+// Contexts
+import { useUser } from "../../../context/User/User.context";
+
 // SVGs
 import AddPic from "../../svg/AddPic";
 import Settings from "../../svg/Settings";
@@ -10,6 +13,7 @@ import Add from "../../svg/Add";
 
 function Navbar() {
   const { pathname } = useLocation();
+  const { user, logoutUser } = useUser();
   const links = [
     {
       icon: <Search />,
@@ -52,8 +56,9 @@ function Navbar() {
           <div className="sidebar__profile center">
             <AddPic />
           </div>
-          {/* ---- CHANGE LATER ---- */}
-          <p className="sidebar__username">User398409</p>
+          <p className="sidebar__username">
+            {user.firstName + " " + user.lastName}
+          </p>
         </div>
 
         {/* Links */}
@@ -79,7 +84,7 @@ function Navbar() {
       </main>
 
       {/* Logout */}
-      <button type="button" className="sidebar__logout">
+      <button type="button" className="sidebar__logout" onClick={logoutUser}>
         Logout
       </button>
     </div>

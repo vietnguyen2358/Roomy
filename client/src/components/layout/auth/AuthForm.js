@@ -32,10 +32,17 @@ function AuthForm(props) {
         {isSignUp ? (
           <>
             <FormInput
-              name="username"
-              placeholder="Create a username..."
+              name="firstName"
+              placeholder="Enter your first name..."
               type="text"
-              label="Username"
+              label="First Name"
+              formik={formik}
+            />
+            <FormInput
+              name="lastName"
+              placeholder="Enter your last name..."
+              type="text"
+              label="Last Name"
               formik={formik}
             />
             <FormInput

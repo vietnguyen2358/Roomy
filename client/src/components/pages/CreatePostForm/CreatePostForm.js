@@ -12,12 +12,13 @@ import { useAPI } from "../../../context/API/API.context";
 import FormInput from "../../layout/auth/FormInput";
 import Search from "../../svg/Search";
 import MapBackground from "./MapBackground";
+import Add from "../../svg/Add";
 
 function CreatePostForm() {
   const { showLoading, closeLoading } = useGlobal();
   const { getZillowInfo } = useAPI();
   const [coordinates, setCoordinates] = useState([0, 0]);
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [dataState, setDataState] = useState({ dataLoaded: false, data: null });
   const formik = useFormik({
     initialValues: {
       zillowLink: "",
@@ -30,8 +31,7 @@ function CreatePostForm() {
 
         const { latitude, longitude } = data;
         setCoordinates([longitude, latitude]);
-        setDataLoaded(true);
-        console.log(data);
+        setDataState({ dataLoaded: true, data });
         closeLoading();
       });
     },
@@ -39,31 +39,58 @@ function CreatePostForm() {
 
   return (
     <div className="create-post-container main-container center">
-      <MapBackground dataLoaded={dataLoaded} coordinates={coordinates} />
-      <div
-        className="shadow center"
-        style={dataLoaded ? { display: "none" } : {}}
-      >
-        <form onSubmit={formik.handleSubmit} className="create-post-form">
-          <h1>
-            Create a <span>Roomy</span> Group
-          </h1>
+      <MapBackground
+        dataLoaded={dataState.dataLoaded}
+        coordinates={coordinates}
+      />
+      {!dataState.dataLoaded ? (
+        <div className="shadow center">
+          <form onSubmit={formik.handleSubmit} className="create-post-form">
+            <h1>
+              Create a <span>Roomy</span> Group
+            </h1>
 
-          {/* Zillow Link */}
-          <FormInput
-            name="zillowLink"
-            placeholder="Enter a Zillow URL..."
-            type="text"
-            label="Zillow URL"
-            formik={formik}
-          />
+            {/* Zillow Link */}
+            <FormInput
+              name="zillowLink"
+              placeholder="Enter a Zillow URL..."
+              type="text"
+              label="Zillow URL"
+              formik={formik}
+            />
 
-          <button type="submit" className="create-post-form__submit row">
-            <Search />
-            Search
-          </button>
-        </form>
-      </div>
+            <button type="submit" className="create-post-form__submit row">
+              <Search />
+              Search
+            </button>
+          </form>
+        </div>
+      ) : (
+        <div className="shadow house-shadow">
+          <div className="house-info">
+            <img src={dataState.data.imagesUrls} alt={dataState.data.address} />
+            <div className="house-info__box">
+              <p className="house-info__rent">
+                ${dataState.data.rent}/mo <span>(Estimate)</span>
+              </p>
+              <p className="house-info__address">{dataState.data.address}</p>
+              <div className="row">
+                <p className="house-info__beds">
+                  {dataState.data.bedCount} Beds
+                </p>
+                <p className="house-info__baths">
+                  {dataState.data.bathCount} Baths
+                </p>
+              </div>
+
+              <button className="house-info__add center">
+                <Add />
+                Create Group
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
