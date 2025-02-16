@@ -1,14 +1,14 @@
-import React from 'react'
-import Filter from "../../layout/Filter"
+import React from "react";
 
+// Components
+import Filter from "../../standalone/Filter";
 
 function Home() {
   return (
-
-    <Filter />
-    
-    
-  )
+    <div className="home-container">
+      <Filter />
+    </div>
+  );
 }
 
-export default Home
+export default Home;

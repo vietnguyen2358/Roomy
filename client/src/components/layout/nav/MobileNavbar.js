@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function MobileNavbar() {
-  return (
-    <div>MobileNavbar</div>
-  )
+  return <div>MobileNavbar</div>;
 }
 
-export default MobileNavbar
+export default MobileNavbar;
