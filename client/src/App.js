@@ -10,6 +10,7 @@ import SignUp from "./components/pages/SignUp/SignUp";
 import SignIn from "./components/pages/SignIn/SignIn";
 import Spinner from "./components/standalone/Spinner/Spinner";
 import Navbar from "./components/layout/nav/Navbar";
+import CreatePostForm from "./components/pages/CreatePostForm/CreatePostForm";
 
 function App() {
   const { pathname } = useLocation();
@@ -21,7 +22,7 @@ function App() {
   const isAuthPage = blacklist[pathname];
 
   return (
-    <div>
+    <div className="App">
       {/* Navbar */}
       {!isAuthPage && <Navbar />}
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/create" element={<CreatePostForm />} />
 
         {/* Not Found */}
         {/* <Route path="*" element={<NotFound />} /> */}
