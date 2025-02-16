@@ -106,7 +106,7 @@ async def addGroup(request : Req):
                         longitude = request.longitude,
                         latitude = request.latitude)
     add_group(getDBFile(), groupObject)
-    return {"Success": True}
+    return {"Success": request.groupID}
 
 @app.put("/newGroupUser")
 async def newGroupUser(request : Req):
