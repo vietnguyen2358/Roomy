@@ -1,5 +1,14 @@
 # Roomy
 A web app to help find your new roommate
+# Requirements
+To run this project, you will need the following
+- Python
+- React
+- Node.js
+- imports from requirements.txt
+- imports from npm node modules
+- API key from Apify
+- API key from Mapbox
 # How to Setup the backend
 Clone the repository
 Create a virtual env called macEnv or winEnv
