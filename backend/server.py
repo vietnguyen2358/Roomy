@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import uuid 
 from constants import APIFYKEY
 from apify_client import ApifyClient
-from db import User, insert_user, verify, User, print_user
+from db import User, insert_user, verify, User, print_user, Group, add_group
 
 class Req (BaseModel):
     id: str = None
@@ -12,12 +12,12 @@ class Req (BaseModel):
     lastName: str = None
     password: str = None
     email: str = None
+    zillowLink: str = None
     groupLists: str = None
     imagesUrls: str = None
     rent: float = None
     bedCount: int = None
     bathCount: int = None
-    squareFootage: int = None
     address: str = None
 
 
@@ -38,15 +38,32 @@ async def addUser(request : Req):
     userObject.insert_user(getDBFile(), userObject)
     insert_user(getDBFile(), userObject)
     print_user(userObject)
-    pass
+    return {"Success": True}
 
 @app.get("/verifyUser")
 async def verifyUser():
-    return verify(file, email, password)
+    return {"Success" : verify(file, email, password)}
 
 @app.get("/ZillowInfo")
 async def getZillowInfo():
     client = ApifyClient(APIFYKEY)
+    #url = request.zillowLink
+    run_input = {
+        "startUrls": [
+            { "url": "https://www.zillow.com/homedetails/3361-Granada-Ct-Santa-Clara-CA-95051/19593967_zpid/" },
+        ],
+        
+    }
+
+    run = client.actor("ENK9p4RZHg0iVso52").call(run_input=run_input)
+    data = client.dataset(run["defaultDatasetId"]).list_items().items[0]
+    return data
+    return {"address": data["streetAddress"], 
+            "bedCount": data["bedrooms"], 
+            "bathCount": data["bathrooms"], 
+            "rent": data["rentZestimate"], 
+            "price": data["price"],
+            "imagesUrls": data["desktopWebHdpImageLink"]}
 
 def getDBFile():
     return "database.db"
