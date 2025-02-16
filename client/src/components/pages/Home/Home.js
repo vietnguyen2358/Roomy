@@ -11,6 +11,7 @@ import { useGlobal } from "../../../context/Global/Global.context";
 import SearchBar from "./SearchBar";
 import BrowseGroups from "./BrowseGroups";
 import ActiveCard from "./ActiveCard";
+import Filter from "../../standalone/Filter/Filter";
 
 function Home() {
   const { houseCardState } = useGlobal();
@@ -27,13 +28,22 @@ function Home() {
     validateOnBlur: false,
     validateOnChange: false,
   });
+  const [filter, setFilter] = useState({
+    minPrice: "",
+    maxPrice: "",
+    bedrooms: 1,
+    bathrooms: 1,
+  });
 
   return (
     <div className="home-container main-container">
-      <main className="home-main">
-        <SearchBar formik={formik} />
-        <BrowseGroups addressQuery={addressQuery} />
-      </main>
+      <div className="row home-row">
+        <main className="home-main">
+          <SearchBar formik={formik} />
+          <BrowseGroups filter={filter} addressQuery={addressQuery} />
+        </main>
+        <Filter filter={filter} setFilter={setFilter} />
+      </div>
 
       {houseCardState.show && <ActiveCard houseCardState={houseCardState} />}
     </div>

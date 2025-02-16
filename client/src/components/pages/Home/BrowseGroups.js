@@ -10,7 +10,7 @@ const convertToObj = (dataMainArr) => {
 
   dataMainArr.map((dataArr) => {
     const cardData = {};
-    cardData.id = dataArr[0];
+    cardData.groupID = dataArr[0];
     cardData.zillowLink = dataArr[1];
     cardData.imagesUrls = dataArr[2];
     cardData.bedCount = dataArr[3];
@@ -28,10 +28,10 @@ const convertToObj = (dataMainArr) => {
 };
 
 function BrowseGroups(props) {
-  const { addressQuery } = props;
+  const { filter, addressQuery } = props;
   const { showHouseCard } = useGlobal();
   const { fetchAllGroups } = useAPI();
-  const { isPending, isError, error, data } = useQuery({
+  const { isPending, isError, error, data, refetch } = useQuery({
     queryKey: ["ALL_GROUPS"],
     queryFn: () => fetchAllGroups(),
   });
@@ -41,10 +41,13 @@ function BrowseGroups(props) {
   }
 
   if (isError) {
-    return <div>Error</div>;
+    return <div>{error.message}</div>;
   }
 
   const cards = convertToObj(data.data);
+  // const filteredCards = cards.filter(card => {
+  //   if(minPrice)
+  // })
   return (
     <div className="browse-groups">
       {cards.map((card) => {
@@ -65,7 +68,7 @@ function BrowseGroups(props) {
 
               <button
                 className="browse-info__more center"
-                onClick={() => showHouseCard(card)}
+                onClick={() => showHouseCard(card, refetch)}
               >
                 More Details
               </button>

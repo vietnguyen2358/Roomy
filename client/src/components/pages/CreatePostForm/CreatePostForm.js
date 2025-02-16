@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { animated, useSpring, useSprings } from "@react-spring/web";
+import { animated, useSpring } from "@react-spring/web";
 
 // Schemas
 import { ZillowLinkSchema } from "../../../schemas/ZillowSchemas";
@@ -49,8 +49,8 @@ function CreatePostForm() {
 
   const [springProps, api] = useSpring(
     () => ({
-      from: { transform: "translate(0, 0)", opacity: 1 },
-      to: { transform: "translate(-10vw, 10vh)", opacity: 0 },
+      from: { transform: "translate(0, 0)", opacity: 0 },
+      to: { transform: "translate(-10vw, 10vh)", opacity: 1 },
       delay: 1000,
     }),
     []
@@ -86,8 +86,8 @@ function CreatePostForm() {
           </form>
         </div>
       ) : (
-        <animated.div style={springProps}>
-          <div className="shadow house-shadow">
+        <div className="shadow house-shadow">
+          <animated.div style={springProps}>
             <div className="house-info">
               <img
                 src={dataState.data.imagesUrls}
@@ -147,8 +147,8 @@ function CreatePostForm() {
                 </button>
               </div>
             </div>
-          </div>
-        </animated.div>
+          </animated.div>
+        </div>
       )}
     </div>
   );
