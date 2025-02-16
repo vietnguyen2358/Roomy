@@ -45,19 +45,19 @@ async def verifyUser():
     return {"Success" : verify(file, email, password)}
 
 @app.get("/ZillowInfo")
-async def getZillowInfo():
+async def getZillowInfo(request: Req):
     client = ApifyClient(APIFYKEY)
-    #url = request.zillowLink
+    url = request.zillowLink
     run_input = {
         "startUrls": [
-            { "url": "https://www.zillow.com/homedetails/3361-Granada-Ct-Santa-Clara-CA-95051/19593967_zpid/" },
+            { "url": url },
         ],
         
     }
 
     run = client.actor("ENK9p4RZHg0iVso52").call(run_input=run_input)
     data = client.dataset(run["defaultDatasetId"]).list_items().items[0]
-    return data
+    #return data
     return {"address": data["streetAddress"], 
             "bedCount": data["bedrooms"], 
             "bathCount": data["bathrooms"], 
