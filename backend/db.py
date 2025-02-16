@@ -164,18 +164,36 @@ def update_group(file, group):
         print(f"Update Group Error: {e}")
     finally:
         con.close()
-    
+
+def fetch_all_groups(file, group):
+    try:
+        con = sqlite3.connect(file)
+        cur = con.cursor()
+        cur.execute("""SELECT * FROM Groups
+                        WHERE UUID = ?
+                    """,
+                    (group.UUID,))
+        data = cur.fetchone()
+    except sqlite3.Error as e:
+        print(f"Fetching All Group Error: {e}")
+        data = []
+    finally:
+        con.close()
+    return data
+
 # get all apts
 def fetch_all_groups(file):
     try:
         con = sqlite3.connect(file)
         cur = con.cursor()
-        cur.execute("""SELECT * FROM Groups;""")
-        return cur.fetchall()
+        cur.execute("""SELECT * FROM Groups""")
+        data = cur.fetchall()
     except sqlite3.Error as e:
         print(f"Fetching All Group Error: {e}")
+        data = []
     finally:
         con.close()
+    return data
 
 # get all users
 def fetch_user(file, user):
@@ -208,16 +226,17 @@ def verify(file, email, password):
 
         if row is None:
             print(f'No matching email found.')
+            con.close()
             return False
         elif password == row[0]:
+            con.close()
             return True
         else:
             print('Incorrect password.')
+            con.close()
             return False
     except sqlite3.Error as e:
         print(f"User Verification Error: {e}")
-    finally:
-        con.close()
 
 # # get all groups the user is in
 # def fetch_user_groups(file, user, group):
