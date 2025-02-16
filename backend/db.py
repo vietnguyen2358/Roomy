@@ -20,11 +20,26 @@ class Group:
         self.rent = rent
         self.address = address
 
-def print_user(user):
+def print_user(file, user):
     headers = ["UUID", "First Name", "Last Name", "Email", "Password"]
-    user_data = fetch_user("database.db", user)
-
+    user_data = fetch_user(file, user)
     print(tabulate(user_data, headers=headers, tablefmt="grid"))
+
+    def fetch_all_users(file):
+        try:
+            con = sqlite3.connect(file)
+            cur = con.cursor()
+            cur.execute("""SELECT * FROM Users;""")
+            return cur.fetchall()
+        except sqlite3.Error as e:
+            print(f"Fetching All Users Error: {e}")
+        finally:
+            con.close()
+
+    def print_all_users(file):
+        headers = ["UUID", "First Name", "Last Name", "Email", "Password"]
+        users_data = fetch_all_users(file)
+        print(tabulate(users_data, headers=headers, tablefmt="grid"))
 
 def create_table():
     try:
@@ -172,11 +187,13 @@ def fetch_user(file, user):
                 WHERE UUID = ?;
             """, 
             (user.UUID,))
-        return cur.fetchall()
+        data = cur.fetchall()
     except sqlite3.Error as e:
         print(f"Fetch User Error: {e}")
+        data = []
     finally:
         con.close()
+    return data
 
 def verify(file, email, password):
     try:
@@ -226,3 +243,18 @@ def remove_group(file, user):
         print(f"Remove Group Error: {e}")
     finally:
         con.close()
+
+def display_all_users(file):
+    try:
+        con = sqlite3.connect(file)
+        cur = con.cursor()
+        cur.execute("""SELECT * FROM Users;""")
+        users_data = cur.fetchall()
+        headers = ["UUID", "First Name", "Last Name", "Email", "Password"]
+        print(tabulate(users_data, headers=headers, tablefmt="grid"))
+    except sqlite3.Error as e:
+        print(f"Display All Users Error: {e}")
+    finally:
+        con.close()
+
+display_all_users("database.db")
