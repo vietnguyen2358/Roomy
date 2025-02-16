@@ -111,7 +111,7 @@ async def addGroup(request : Req):
 
 @app.put("/updateGroup")
 async def updateGroup(request : Req):
-    groupObject = Group(UUID = request.id, 
+    groupObject = Group(UUID = request.groupID, 
                         userIDs = request.userLists, 
                         link = request.zillowLink, 
                         images = request.imagesUrls, 
@@ -127,12 +127,12 @@ async def updateGroup(request : Req):
 @app.delete("/deleteGroup")
 async def deleteGroup(request : Req):
     remove_group(getDBFile(), request.id)
-    return
+    return {"Success": True}
 
 @app.delete("/deleteUserFromGroup")
 async def deleteUserFromGroup(request : Req):
-    # remove_user_from_group(getDBFile(), )
-    return
+    remove_user_from_group(getDBFile(), request.groupID, request.id)
+    return {"Success": True}
 
 def getDBFile():
     return "database.db"
