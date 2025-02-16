@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 
 // Schemas
@@ -16,6 +16,8 @@ import MapBackground from "./MapBackground";
 function CreatePostForm() {
   const { showLoading, closeLoading } = useGlobal();
   const { getZillowInfo } = useAPI();
+  const [coordinates, setCoordinates] = useState([0, 0]);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const formik = useFormik({
     initialValues: {
       zillowLink: "",
@@ -26,6 +28,9 @@ function CreatePostForm() {
       getZillowInfo(values.zillowLink, (data, err) => {
         if (err) return console.log(err);
 
+        const { latitude, longitude } = data;
+        setCoordinates([longitude, latitude]);
+        setDataLoaded(true);
         console.log(data);
         closeLoading();
       });
@@ -34,8 +39,11 @@ function CreatePostForm() {
 
   return (
     <div className="create-post-container main-container center">
-      <MapBackground />
-      <div className="shadow center">
+      <MapBackground dataLoaded={dataLoaded} coordinates={coordinates} />
+      <div
+        className="shadow center"
+        style={dataLoaded ? { display: "none" } : {}}
+      >
         <form onSubmit={formik.handleSubmit} className="create-post-form">
           <h1>
             Create a <span>Roomy</span> Group
