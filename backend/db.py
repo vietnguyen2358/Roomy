@@ -285,7 +285,9 @@ def remove_user_from_group(file, groupUUID, userUUID):
                     WHERE UUID = ?         
                 """,
                 (groupUUID,))
-        userIDs = cur.fetchone().split(',')
+        result = cur.fetchone()
+        userIDs = result[0].split(',')
+        print(userIDs)
 
         if userUUID in userIDs:
             userIDs.remove(userUUID)
