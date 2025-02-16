@@ -5,6 +5,8 @@ import uuid
 from constants import APIFYKEY
 from apify_client import ApifyClient
 from db import User, insert_user, verify, User, print_user, Group, add_group
+from fastapi.middleware.cors import CORSMiddleware
+
 
 class Req (BaseModel):
     id: str = None
@@ -22,6 +24,14 @@ class Req (BaseModel):
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"], # Update with your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
 async def testPage():
     return {"message": "testServer"}
