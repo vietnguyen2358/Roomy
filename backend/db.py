@@ -10,7 +10,7 @@ class User:
         self.password = password
 
 class Group:
-    def __init__(self, UUID, userIDs, link, images, bedCount, bathCount, rent, address, sqFt):
+    def __init__(self, UUID, userIDs, link, images, bedCount, bathCount, rent, address):
         self.UUID = UUID
         self.userIDs = userIDs
         self.link = link
@@ -19,7 +19,6 @@ class Group:
         self.bathCount = bathCount
         self.rent = rent
         self.address = address
-        self.sqFt = sqFt
 
 def print_user(user):
     headers = ["UUID", "First Name", "Last Name", "Email", "Password"]
@@ -45,7 +44,6 @@ def create_table():
                                                     BATHCOUNT INTEGER NOT NULL,
                                                     RENT FLOAT NOT NULL,
                                                     ADDRESS TEXT NOT NULL,
-                                                    SQUAREFOOTAGE INTEGER NOT NULL,
                                                     USER_UUIDS TEXT NOT NULL);
                     COMMIT;    
         """)
@@ -54,13 +52,16 @@ def create_table():
     finally:
         con.close()
 
+# Uncomment this line to create a db, comment out afterward
+# create_table()
+
 # creates new user 
 def insert_user(file, user):
     try:
         con = sqlite3.connect(file)
         cur = con.cursor()
         cur.execute("""
-                INSERT INTO Users VALUES
+                INSERT INTO Users
                     (UUID,
                     First,
                     Last,
@@ -69,6 +70,7 @@ def insert_user(file, user):
                 VALUES (?, ?, ?, ?, ?)
                 """,
                 (user.UUID, user.firstName, user.lastName, user.email, user.password))
+        con.commit()
     except sqlite3.Error as e:
         print(f"Table Insertion Error: {e}")
     finally:
@@ -80,7 +82,7 @@ def add_group(file, group):
         con = sqlite3.connect(file)
         cur = con.cursor()
         cur.execute("""
-                INSERT INTO Groups VALUES
+                INSERT INTO Groups
                     (UUID, 
                     LINK,
                     IMAGES,
@@ -88,29 +90,43 @@ def add_group(file, group):
                     BATHCOUNT,
                     RENT,
                     ADDRESS,
-                    SQUAREFOOTAGE,
-                    USERS)
+                    USER_UUIDS)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (group.UUID, group.link, group.images, group.bedCount,group.bathCount ,group.rent ,group.address, group.sqFt, group.userIDs))
+                (group.UUID, group.link, group.images, group.bedCount, group.bathCount, group.rent, group.address, group.userIDs))
+        con.commit()
     except sqlite3.Error as e:
         print(f"Group Insertion Error: {e}")
     finally:
         con.close()
-    
+  
 # add the user into the apt group    
-def insert_user_group(file, user):
-    con = sqlite3.connect(file)
-    cur = con.cursor()
-    cur.execute("""
-                INSERT INTO Groups VALUES
-                    (USERS)
-                VALUES(?);            
+def insert_user_group(file, user, group):
+    try:
+        con = sqlite3.connect(file)
+        cur = con.cursor()
+        cur.execute("""
+                SELECT USER_UUIDS FROM Groups
+                    WHERE UUID = ?         
                 """,
-                (user.users))
+                (group.UUID,))
+        userIDs = cur.fetchone().split(',')
+
+        userIDs.append(user.UUID)
+        cur.execute("""
+                UPDATE Groups
+                SET USER_UUIDS = ?
+                WHERE UUID = ?;
+                """,
+                (','.join(userIDs), group.UUID))
+        con.commit()
+    except sqlite3.Error as e:
+        print(f"Group Insertion Error: {e}")
+    finally:
+        con.close()
 
 # update the values of apt
-def update_group(file,group):
+def update_group(file, group):
     try: 
         con = sqlite3.connect(file)
         cur = con.cursor()
@@ -125,7 +141,7 @@ def update_group(file,group):
                     RENT = ?, 
                     ADDRESS = ?, 
                     SQUAREFOOTAGE = ?,
-                    USERS = ?
+                    USER_UUIDS = ?
             WHERE UUID = ?
                 """,
                 (group.UUID, group.link, group.images, group.bedCount, group.bathCount, group.rent, group.adress, group.sqFt, group.userIDs, group.UUID))
@@ -155,7 +171,7 @@ def fetch_user(file, user):
                 SELECT * FROM Users
                 WHERE UUID = ?;
             """, 
-            (user.UUID))
+            (user.UUID,))
         return cur.fetchall()
     except sqlite3.Error as e:
         print(f"Fetch User Error: {e}")
@@ -167,8 +183,20 @@ def verify(file, email, password):
         con = sqlite3.connect(file)
         cur = con.cursor()
         cur.execute("""
-                    """)
+                    SELECT PASSWORD FROM Users
+                    WHERE EMAIL = ?
+                    """,
+                    (email,))
+        row = cur.fetchone()
 
+        if row is None:
+            print(f'No matching email found.')
+            return False
+        elif password == row[0]:
+            return True
+        else:
+            print('Incorrect password.')
+            return False
     except sqlite3.Error as e:
         print(f"User Verification Error: {e}")
     finally:
@@ -198,5 +226,3 @@ def remove_group(file, user):
         print(f"Remove Group Error: {e}")
     finally:
         con.close()
-    
-# create_table()
