@@ -37,7 +37,8 @@ function SignUp() {
           addUser({ email, firstName, lastName, password }, (data, err) => {
             if (err) return console.log(err);
 
-            updateUser({ email, firstName, lastName });
+            const { uid } = data;
+            updateUser({ email, firstName, lastName, uid });
             signUserIn();
             closeLoading();
             resetForm();

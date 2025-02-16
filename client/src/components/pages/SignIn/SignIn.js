@@ -34,9 +34,10 @@ function SignIn() {
             if (err) return console.log(err);
 
             const { Success } = data;
-            const firstName = Success[0];
-            const lastName = Success[1];
-            updateUser({ email: values.email, firstName, lastName });
+            const uid = Success[0];
+            const firstName = Success[1];
+            const lastName = Success[2];
+            updateUser({ email: values.email, firstName, lastName, uid });
             signUserIn();
             closeLoading();
             resetForm();

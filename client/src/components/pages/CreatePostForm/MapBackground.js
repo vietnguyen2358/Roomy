@@ -6,7 +6,7 @@ const Map = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_KEY,
 });
 
-function MapBackground({ dataLoaded, coordinates }) {
+function MapBackground({ coordinates, springAPI }) {
   const defaultCoordinates = [-122.4194, 37.7749]; // Bay Area
 
   // State to track map center & zoom
@@ -29,6 +29,9 @@ function MapBackground({ dataLoaded, coordinates }) {
       }}
       center={mapCenter}
       zoom={mapZoom} // Dynamic zoom level
+      onZoomEnd={() =>
+        springAPI.start({ from: { opacity: 0 }, to: { opacity: 1 } })
+      }
     />
   );
 }

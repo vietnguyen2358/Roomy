@@ -9,6 +9,7 @@ export const UserContextProvider = (props) => {
     email: "",
     firstName: "",
     lastName: "",
+    uid: "",
   });
   const [auth, setAuth] = useState({ isSignedIn: false });
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export const UserContextProvider = (props) => {
   const updateUser = (userData) => setUser({ ...userData });
   const signUserIn = () => setAuth({ isSignedIn: true });
   const logoutUser = () => {
-    setUser({ email: "", firstName: "", lastName: "" });
+    setUser({ email: "", firstName: "", lastName: "", uid: "" });
     setAuth({ isSignedIn: false });
     navigate("/signin");
   };

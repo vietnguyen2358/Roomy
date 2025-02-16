@@ -25,8 +25,16 @@ export const APIContextProvider = (props) => {
       .then((res) => cb(res.data, null))
       .catch((err) => cb(null, err));
 
+  // Create Group
+  const createGroup = (uid, cb) =>
+    Axios.post(REACT_APP_API_URI + "/verifyUser", { id: uid })
+      .then((res) => cb(res.data, null))
+      .catch((err) => cb(null, err));
+
   return (
-    <APIContext.Provider value={{ getZillowInfo, addUser, signInUser }}>
+    <APIContext.Provider
+      value={{ getZillowInfo, addUser, signInUser, createGroup }}
+    >
       {props.children}
     </APIContext.Provider>
   );
