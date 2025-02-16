@@ -192,3 +192,51 @@ hr {
     }
   }
 }
+
+// Search Bar
+.home-main {
+  width: 40vw;
+}
+
+.search__box {
+  width: 100%;
+
+  .search-bar {
+    width: 100%;
+    padding: $spacer-small * 0.5 $spacer-small;
+    background: rgba(#eeeeee, 0.5);
+    border-radius: 5px;
+  }
+
+  input {
+    outline: none;
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: $main-fs * 0.65;
+  }
+
+  svg {
+    path {
+      fill: #808080;
+    }
+  }
+
+  .search__close {
+    outline: none;
+    border: none;
+    background: transparent;
+    transition: all 200ms ease-out;
+
+    svg {
+      path {
+        fill: $dark-red;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(0.8);
+    }
+  }
+}

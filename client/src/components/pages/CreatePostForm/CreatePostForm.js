@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { animated, useSprings } from "@react-spring/web";
 
 // Schemas
-import { ZillowLinkSchema } from "../../../schemas/UserSchemas";
+import { ZillowLinkSchema } from "../../../schemas/ZillowSchemas";
 
 // Contexts
 import { useGlobal } from "../../../context/Global/Global.context";
@@ -38,7 +38,10 @@ function CreatePostForm() {
 
         const { latitude, longitude } = data;
         setCoordinates([longitude, latitude]);
-        setDataState({ dataLoaded: true, data });
+        setDataState({
+          dataLoaded: true,
+          data: { ...data, zillowLink: values.zillowLink },
+        });
         closeLoading();
       });
     },
@@ -65,6 +68,8 @@ function CreatePostForm() {
     },
     []
   );
+
+  console.log(dataState.data);
 
   return (
     <div className="create-post-container main-container center">
@@ -125,12 +130,47 @@ function CreatePostForm() {
                       className="house-info__add center"
                       onClick={() => {
                         showLoading("Creating your new Roomy Group...");
-                        createGroup(uid, (data, err) => {
-                          if (err) return console.log(err);
-
-                          closeLoading();
-                          navigate("/groups");
+                        console.log(dataState.data);
+                        const {
+                          address,
+                          rent,
+                          bedCount,
+                          bathCount,
+                          imagesUrls,
+                          latitude,
+                          longitude,
+                          zillowLink,
+                        } = dataState.data;
+                        console.log({
+                          id: uid,
+                          address,
+                          rent,
+                          bedCount,
+                          bathCount,
+                          imagesUrls,
+                          latitude,
+                          longitude,
+                          zillowLink,
                         });
+                        createGroup(
+                          {
+                            id: uid,
+                            address,
+                            rent,
+                            bedCount,
+                            bathCount,
+                            imagesUrls,
+                            latitude,
+                            longitude,
+                            zillowLink,
+                          },
+                          (data, err) => {
+                            if (err) return console.log(err);
+
+                            closeLoading();
+                            navigate("/groups");
+                          }
+                        );
                       }}
                     >
                       <Add />

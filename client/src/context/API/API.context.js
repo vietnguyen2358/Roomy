@@ -26,14 +26,29 @@ export const APIContextProvider = (props) => {
       .catch((err) => cb(null, err));
 
   // Create Group
-  const createGroup = (uid, cb) =>
-    Axios.post(REACT_APP_API_URI + "/verifyUser", { id: uid })
+  const createGroup = (data, cb) =>
+    Axios.post(REACT_APP_API_URI + "/addGroup", data)
       .then((res) => cb(res.data, null))
       .catch((err) => cb(null, err));
 
+  // Fetch All Groups
+  const fetchAllGroups = () =>
+    Axios.get(REACT_APP_API_URI + "/fetchAllGroup")
+      .then((res) => res.data)
+      .catch((err) => {
+        console.log(err);
+        return null;
+      });
+
   return (
     <APIContext.Provider
-      value={{ getZillowInfo, addUser, signInUser, createGroup }}
+      value={{
+        getZillowInfo,
+        addUser,
+        signInUser,
+        createGroup,
+        fetchAllGroups,
+      }}
     >
       {props.children}
     </APIContext.Provider>

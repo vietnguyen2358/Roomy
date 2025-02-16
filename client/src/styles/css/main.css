@@ -647,6 +647,43 @@ hr {
   background: #4ab89c;
 }
 
+.home-main {
+  width: 40vw;
+}
+
+.search__box {
+  width: 100%;
+}
+.search__box .search-bar {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: rgba(238, 238, 238, 0.5);
+  border-radius: 5px;
+}
+.search__box input {
+  outline: none;
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 0.975rem;
+}
+.search__box svg path {
+  fill: #808080;
+}
+.search__box .search__close {
+  outline: none;
+  border: none;
+  background: transparent;
+  transition: all 200ms ease-out;
+}
+.search__box .search__close svg path {
+  fill: #ff3a3a;
+}
+.search__box .search__close:hover {
+  cursor: pointer;
+  transform: scale(0.8);
+}
+
 .create-post-container {
   position: relative;
   width: 100%;

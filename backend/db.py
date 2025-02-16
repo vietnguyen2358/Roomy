@@ -354,5 +354,6 @@ def display_all_groups(file):
         print(f"Display All Groups Error: {e}")
     finally:
         con.close()
+# create_table()
 display_all_users("database.db")
 display_all_groups("database.db")

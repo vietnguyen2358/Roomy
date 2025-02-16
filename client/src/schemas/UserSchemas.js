@@ -45,13 +45,3 @@ export const SignInSchema = Yup.object().shape({
     .required("Must enter a password."),
 });
 
-export const ZillowLinkSchema = Yup.object().shape({
-  zillowLink: Yup.string()
-    .min(1, "A valid Zillow URL is required.")
-    .max(500, "Your Zillow URL exceeds the character limit (500).")
-    .matches(
-      /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
-      "Please enter a valid URL."
-    )
-    .required("A valid Zillow URL is required."),
-});
