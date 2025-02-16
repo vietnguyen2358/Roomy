@@ -5,10 +5,14 @@ export const SignUpSchema = Yup.object().shape({
     .email("Please enter a valid email.")
     .max(300, "Your email exceeds the character limit (300).")
     .required("A valid email is required."),
-  username: Yup.string()
-    .min(2, "Your username must be atleast 2 characters.")
-    .max(300, "Your username exceeds the character limit (300).")
-    .required("A username is required."),
+  firstName: Yup.string()
+    .min(2, "Your first name must be atleast 2 characters.")
+    .max(300, "Your first name exceeds the character limit (300).")
+    .required("A first name is required."),
+  lastName: Yup.string()
+    .min(2, "Your last name must be atleast 2 characters.")
+    .max(300, "Your last name exceeds the character limit (300).")
+    .required("A last name is required."),
   password: Yup.string()
     .trim()
     .min(8, "Your password must be atleast 8 characters.")

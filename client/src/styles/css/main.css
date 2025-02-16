@@ -310,7 +310,6 @@ html {
   position: relative;
   width: 100vw;
   height: 100vh;
-  overflow-y: hidden;
 }
 .auth-container__auth-bg {
   position: absolute;
@@ -700,6 +699,76 @@ hr {
 .create-post-form__submit:hover {
   cursor: pointer;
   background: #1bb9a4;
+}
+
+.house-shadow {
+  background: rgba(0, 0, 0, 0.25) !important;
+}
+
+.house-info {
+  position: absolute;
+  top: 5vh;
+  right: 5vw;
+  background: white;
+  width: 20vw;
+  min-height: 40vh;
+  border-radius: 10px;
+  box-shadow: -2px 2px 5px 1px rgba(0, 0, 0, 0.5);
+}
+.house-info img {
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.house-info__box {
+  padding: 1rem;
+}
+.house-info__rent {
+  font-weight: bold;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+.house-info__rent span {
+  color: #808080;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+.house-info__address {
+  margin-bottom: 0.5rem;
+}
+.house-info__beds, .house-info__baths {
+  color: #808080;
+}
+.house-info__beds {
+  border-right: 1px solid #808080;
+  padding-right: 0.35rem;
+  margin-right: 0.35rem;
+}
+.house-info__add {
+  outline: none;
+  border: 1px solid #20dbc2;
+  color: #20dbc2;
+  border-radius: 25px;
+  padding: 0.35rem 2rem;
+  background: transparent;
+  margin-top: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  transition: all 200ms ease-out;
+}
+.house-info__add svg {
+  margin-right: 0.5rem;
+}
+.house-info__add svg path {
+  fill: #20dbc2;
+}
+.house-info__add:hover {
+  cursor: pointer;
+  background: #20dbc2;
+  color: white;
+}
+.house-info__add:hover svg path {
+  fill: white;
 }
 
 body {

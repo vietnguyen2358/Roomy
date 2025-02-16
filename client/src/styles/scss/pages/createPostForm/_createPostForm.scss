@@ -58,3 +58,86 @@
     }
   }
 }
+
+.house-shadow {
+  background: rgba(black, 0.25) !important;
+}
+
+.house-info {
+  position: absolute;
+  top: 5vh;
+  right: 5vw;
+  background: white;
+  width: 20vw;
+  min-height: 40vh;
+  border-radius: 10px;
+  box-shadow: -2px 2px 5px 1px rgba(black, 0.5);
+
+  img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  &__box {
+    padding: $spacer-small;
+  }
+
+  &__rent {
+    font-weight: bold;
+    font-size: $main-fs * 0.75;
+    margin-bottom: $spacer-small * 0.5;
+
+    span {
+      color: #808080;
+      font-size: $main-fs * 0.6;
+      font-weight: 400;
+    }
+  }
+
+  &__address {
+    margin-bottom: $spacer-small * 0.5;
+  }
+
+  &__beds,
+  &__baths {
+    color: #808080;
+  }
+
+  &__beds {
+    border-right: 1px solid #808080;
+    padding-right: $spacer-small * 0.35;
+    margin-right: $spacer-small * 0.35;
+  }
+
+  &__add {
+    outline: none;
+    border: 1px solid $primary;
+    color: $primary;
+    border-radius: 25px;
+    padding: $spacer-small * 0.35 $spacer;
+    background: transparent;
+    margin-top: $spacer;
+    font-weight: bold;
+    margin-bottom: $spacer-small * 0.5;
+    transition: all 200ms ease-out;
+
+    svg {
+      margin-right: $spacer-small * 0.5;
+
+      path {
+        fill: $primary;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: $primary;
+      color: white;
+
+      svg path {
+        fill: white;
+      }
+    }
+  }
+}
