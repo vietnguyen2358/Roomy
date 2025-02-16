@@ -9,12 +9,37 @@ export const GlobalContextProvider = (props) => {
     message: "Loading...",
   });
 
+  const [houseCardState, setHouseCardState] = useState({
+    show: false,
+    data: null,
+  });
+
+  const showHouseCard = (data) => {
+    const updatedUserList = data.userLists.split(",");
+    setHouseCardState({
+      show: true,
+      data: { ...data, userLists: updatedUserList },
+    });
+  };
+
+  const closeHouseCard = (data) =>
+    setHouseCardState({ show: false, data: null });
+
   const showLoading = (message) => setLoadingState({ show: true, message });
   const closeLoading = () =>
     setLoadingState({ show: false, message: "Loading..." });
 
   return (
-    <GlobalContext.Provider value={{ loadingState, showLoading, closeLoading }}>
+    <GlobalContext.Provider
+      value={{
+        loadingState,
+        showLoading,
+        closeLoading,
+        houseCardState,
+        showHouseCard,
+        closeHouseCard,
+      }}
+    >
       {props.children}
     </GlobalContext.Provider>
   );

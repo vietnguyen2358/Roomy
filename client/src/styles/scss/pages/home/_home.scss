@@ -1,7 +1,8 @@
 // Home Styles
 .sidebar {
+  position: fixed;
   background-color: #00002b;
-  width: 22.5vw;
+  width: 20vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -195,7 +196,7 @@ hr {
 
 // Search Bar
 .home-main {
-  width: 40vw;
+  width: 42.5vw;
 }
 
 .search__box {
@@ -238,5 +239,80 @@ hr {
       cursor: pointer;
       transform: scale(0.8);
     }
+  }
+}
+
+.browse-info {
+  // margin-right: $spacer-md;
+  background: white;
+  width: 20vw;
+  min-height: 40vh;
+  border-radius: 10px;
+  box-shadow: -2px 2px 5px 1px rgba(black, 0.5);
+
+  img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+}
+
+.browse-groups {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: $spacer;
+  gap: $spacer;
+}
+
+.browse-info__more {
+  outline: none;
+  border: none;
+  background: transparent;
+  color: $primary;
+  font-weight: bold;
+  padding: 0;
+  margin-top: $spacer-small * 1.25;
+  transition: all 200ms ease-out;
+
+  &:hover {
+    cursor: pointer;
+    color: $dark-primary;
+  }
+}
+
+.card-shadow {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(black, 0.5);
+}
+
+.active-card {
+  align-items: flex-start;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 1px rgba(black, 0.5);
+
+  img {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  .house-info__box {
+    min-width: 20vw;
+    padding: $spacer-small * 1.25;
+  }
+
+  .house-info__rent {
+    font-size: $main-fs;
+  }
+
+  .house-info__address {
+    font-size: $main-fs * 0.75;
+    margin-top: $spacer-small * 0.85;
+    margin-bottom: $spacer-small;
   }
 }

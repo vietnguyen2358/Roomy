@@ -475,8 +475,9 @@ html {
   }
 }
 .sidebar {
+  position: fixed;
   background-color: #00002b;
-  width: 22.5vw;
+  width: 20vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -648,7 +649,7 @@ hr {
 }
 
 .home-main {
-  width: 40vw;
+  width: 42.5vw;
 }
 
 .search__box {
@@ -682,6 +683,74 @@ hr {
 .search__box .search__close:hover {
   cursor: pointer;
   transform: scale(0.8);
+}
+
+.browse-info {
+  background: white;
+  width: 20vw;
+  min-height: 40vh;
+  border-radius: 10px;
+  box-shadow: -2px 2px 5px 1px rgba(0, 0, 0, 0.5);
+}
+.browse-info img {
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.browse-groups {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 2rem;
+  gap: 2rem;
+}
+
+.browse-info__more {
+  outline: none;
+  border: none;
+  background: transparent;
+  color: #20dbc2;
+  font-weight: bold;
+  padding: 0;
+  margin-top: 1.25rem;
+  transition: all 200ms ease-out;
+}
+.browse-info__more:hover {
+  cursor: pointer;
+  color: #1bb9a4;
+}
+
+.card-shadow {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.active-card {
+  align-items: flex-start;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
+}
+.active-card img {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.active-card .house-info__box {
+  min-width: 20vw;
+  padding: 1.25rem;
+}
+.active-card .house-info__rent {
+  font-size: 1.5rem;
+}
+.active-card .house-info__address {
+  font-size: 1.125rem;
+  margin-top: 0.85rem;
+  margin-bottom: 1rem;
 }
 
 .create-post-container {
@@ -817,5 +886,6 @@ body {
 }
 
 .main-container {
-  padding: 2rem;
+  padding: 2.5rem;
+  margin-left: 20vw;
 }/*# sourceMappingURL=main.css.map */
