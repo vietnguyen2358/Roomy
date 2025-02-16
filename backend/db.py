@@ -10,7 +10,7 @@ class User:
         self.password = password
 
 class Group:
-    def __init__(self, UUID, userIDs, link, images, bedCount, bathCount, rent, address):
+    def __init__(self, UUID, userIDs, link, images, bedCount, bathCount, rent, address, longitude, latitude):
         self.UUID = UUID
         self.userIDs = userIDs
         self.link = link
@@ -19,6 +19,8 @@ class Group:
         self.bathCount = bathCount
         self.rent = rent
         self.address = address
+        self.longitude = longitude
+        self.latitude = latitude
 
 def print_user(file, user):
     headers = ["UUID", "First Name", "Last Name", "Email", "Password"]
@@ -59,6 +61,8 @@ def create_table():
                                                     BATHCOUNT INTEGER NOT NULL,
                                                     RENT FLOAT NOT NULL,
                                                     ADDRESS TEXT NOT NULL,
+                                                    LONGITUDE FLOAT NOT NULL,
+                                                    LATITUDE FLOAT NOT NULL,
                                                     USER_UUIDS TEXT NOT NULL);
                     COMMIT;    
         """)
@@ -105,10 +109,21 @@ def add_group(file, group):
                     BATHCOUNT,
                     RENT,
                     ADDRESS,
+                    LONGITUDE,
+                    LATITUDE,
                     USER_UUIDS)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (group.UUID, group.link, group.images, group.bedCount, group.bathCount, group.rent, group.address, group.userIDs))
+                (group.UUID,
+                 group.link,
+                 group.images,
+                 group.bedCount,
+                 group.bathCount,
+                 group.rent,
+                 group.address,
+                 group.longitude,
+                 group.latitude,
+                 group.userIDs))
         con.commit()
     except sqlite3.Error as e:
         print(f"Group Insertion Error: {e}")
@@ -155,11 +170,22 @@ def update_group(file, group):
                     BATHCOUNT = ?, 
                     RENT = ?, 
                     ADDRESS = ?, 
-                    SQUAREFOOTAGE = ?,
+                    LONGITUDE = ?,
+                    LATITUDE = ?,
                     USER_UUIDS = ?
             WHERE UUID = ?
                 """,
-                (group.UUID, group.link, group.images, group.bedCount, group.bathCount, group.rent, group.adress, group.sqFt, group.userIDs, group.UUID))
+                (group.UUID,
+                 group.link,
+                 group.images,
+                 group.bedCount,
+                 group.bathCount,
+                 group.rent,
+                 group.address,
+                 group.longitude,
+                 group.latitude,
+                 group.userIDs,
+                 group.UUID))
     except sqlite3.Error as e:
         print(f"Update Group Error: {e}")
     finally:
@@ -249,11 +275,12 @@ def verify(file, email, password):
 #                 """,
 #                 (user.UUID, group.users))
 
-# remove the apt listing
-def remove_group(file, userUUID):
+# remove the user from group
+def remove_group(file, groupUUID, userUUID):
     try:
         con = sqlite3.connect(file)
         cur = con.cursor()
+        group = fetch_group(file, groupUUID)
         cur.execute("""
                 DELETE FROM Groups
                 WHERE UUID = ?;
@@ -283,7 +310,7 @@ def display_all_groups(file):
         cur = con.cursor()
         cur.execute("""SELECT * FROM Groups;""")
         groups_data = cur.fetchall()
-        headers = ["UUID", "Link", "Images", "Bed Count", "Bath Count", "Rent", "Address", "User UUIDs"]
+        headers = ["UUID", "Link", "Images", "Bed Count", "Bath Count", "Rent", "Address", "Longitude", "Latitude", "User UUIDs"]
         print(tabulate(groups_data, headers=headers, tablefmt="grid"))
     except sqlite3.Error as e:
         print(f"Display All Groups Error: {e}")
