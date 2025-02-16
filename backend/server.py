@@ -90,15 +90,15 @@ async def getGroup(request : Req):
     return fetch_group(getDBFile(), request.groupID)
 
 @app.get("/fetchAllGroup")
-async def getAllGroup(request : Req):
-    return fetch_all_groups(getDBFile())
+async def getAllGroup():
+    return {"data":fetch_all_groups(getDBFile())}
 
 @app.post("/addGroup")
 async def addGroup(request : Req):
     request.groupID = str(uuid.uuid4())
     groupObject = Group(UUID = request.groupID, 
                         userIDs = request.id, 
-                        link = request.zillowLink, 
+                        link = request.zillowLink,  
                         images = request.imagesUrls, 
                         bedCount = request.bedCount, 
                         bathCount = request.bathCount, 
@@ -126,7 +126,7 @@ async def updateGroup(request : Req):
 
 @app.delete("/deleteGroup")
 async def deleteGroup(request : Req):
-    remove_group(getDBFile(), request.id)
+    remove_group(getDBFile(), request.groupID)
     return {"Success": True}
 
 @app.delete("/deleteUserFromGroup")
