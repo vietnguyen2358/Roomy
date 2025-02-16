@@ -44,7 +44,7 @@ async def addUser(request : Req):
 async def verifyUser():
     return {"Success" : verify(file, email, password)}
 
-@app.get("/ZillowInfo")
+@app.post("/ZillowInfo")
 async def getZillowInfo(request: Req):
     client = ApifyClient(APIFYKEY)
     url = request.zillowLink
