@@ -29,7 +29,7 @@ class Req (BaseModel):
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"], # Update with your frontend URL
+    allow_origins=["*"], # Update with your frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -106,6 +106,8 @@ async def addGroup(request : Req):
                         address = request.address,
                         longitude = request.longitude,
                         latitude = request.latitude)
+    print(groupObject.userIDs)
+    print(groupObject.UUID)
     add_group(getDBFile(), groupObject)
     return {"Success": True}
 

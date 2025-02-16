@@ -287,7 +287,6 @@ def remove_user_from_group(file, groupUUID, userUUID):
                 (groupUUID,))
         result = cur.fetchone()
         userIDs = result[0].split(',')
-        print(userIDs)
 
         if userUUID in userIDs:
             userIDs.remove(userUUID)
@@ -354,6 +353,5 @@ def display_all_groups(file):
         print(f"Display All Groups Error: {e}")
     finally:
         con.close()
-# create_table()
 display_all_users("database.db")
 display_all_groups("database.db")
