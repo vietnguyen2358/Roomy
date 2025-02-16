@@ -303,7 +303,18 @@ def display_all_users(file):
         print(f"Display All Users Error: {e}")
     finally:
         con.close()
-
+def get_group_by_url(file, url):
+    try:
+        con = sqlite3.connect(file)
+        cur = con.cursor()
+        cur.execute("""SELECT UUID, LINK, IMAGES, BEDCOUNT, BATHCOUNT, RENT, ADDRESS, LONGITUDE, LATITUDE FROM Groups WHERE LINK = ?;""", (url,))
+        group_data = cur.fetchone()
+        headers = ["UUID", "Link", "Images", "Bed Count", "Bath Count", "Rent", "Address", "Longitude", "Latitude"]
+        return list(group_data)
+    except sqlite3.Error as e:
+        print(f"Get Group By URL Error: {e}")
+    finally:
+        con.close()
 def display_all_groups(file):
     try:
         con = sqlite3.connect(file)
