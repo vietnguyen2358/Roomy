@@ -86,8 +86,6 @@ const Filter = (props) => {
           </select>
         </div>
       </div>
-
-      <button className="filter__apply">Apply</button>
     </div>
   );
 };

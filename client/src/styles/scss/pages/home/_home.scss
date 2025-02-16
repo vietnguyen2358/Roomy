@@ -198,6 +198,17 @@ hr {
   }
 }
 
+.browse__none {
+  margin-top: $spacer;
+  color: #808080;
+
+  span {
+    color: $primary;
+    font-family: $font;
+    font-size: $main-fs * 0.85;
+  }
+}
+
 // Search Bar
 .home-main {
   width: 42.5vw;

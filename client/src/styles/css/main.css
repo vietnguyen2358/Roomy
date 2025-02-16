@@ -652,6 +652,16 @@ hr {
   background: #4ab89c;
 }
 
+.browse__none {
+  margin-top: 2rem;
+  color: #808080;
+}
+.browse__none span {
+  color: #20dbc2;
+  font-family: "Pacifico", serif;
+  font-size: 1.275rem;
+}
+
 .home-main {
   width: 42.5vw;
 }
@@ -953,4 +963,5 @@ body {
 .main-container {
   padding: 2.5rem;
   margin-left: 20vw;
+  padding-bottom: 8rem;
 }/*# sourceMappingURL=main.css.map */
