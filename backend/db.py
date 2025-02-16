@@ -244,7 +244,7 @@ def verify(file, email, password):
         con = sqlite3.connect(file)
         cur = con.cursor()
         cur.execute("""
-                    SELECT FIRST_NAME, LAST_NAME, PASSWORD FROM Users
+                    SELECT UUID, FIRST_NAME, LAST_NAME, PASSWORD FROM Users
                     WHERE EMAIL = ?
                     """,
                     (email,))
@@ -254,9 +254,9 @@ def verify(file, email, password):
             print(f'No matching email found.')
             con.close()
             return None
-        elif password == row[2]:
+        elif password == row[3]:
             con.close()
-            return [row[0], row[1]]
+            return [row[0], row[1], row[2]]
         else:
             print('Incorrect password.')
             con.close()

@@ -44,7 +44,7 @@ async def addUser(request : Req):
     userObject = User(UUID = request.id, firstName = request.firstName, lastName = request.lastName, email = request.email, password = request.password)
     insert_user(getDBFile(), userObject)
     print_user(getDBFile(), userObject)
-    return {"Success": True}
+    return {"uid": request.id}
 
 @app.post("/verifyUser")
 async def verifyUser(request : Req):
