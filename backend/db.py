@@ -25,21 +25,21 @@ def print_user(file, user):
     user_data = fetch_user(file, user)
     print(tabulate(user_data, headers=headers, tablefmt="grid"))
 
-    def fetch_all_users(file):
-        try:
-            con = sqlite3.connect(file)
-            cur = con.cursor()
-            cur.execute("""SELECT * FROM Users;""")
-            return cur.fetchall()
-        except sqlite3.Error as e:
-            print(f"Fetching All Users Error: {e}")
-        finally:
-            con.close()
+def fetch_all_users(file):
+    try:
+        con = sqlite3.connect(file)
+        cur = con.cursor()
+        cur.execute("""SELECT * FROM Users;""")
+        return cur.fetchall()
+    except sqlite3.Error as e:
+        print(f"Fetching All Users Error: {e}")
+    finally:
+        con.close()
 
-    def print_all_users(file):
-        headers = ["UUID", "First Name", "Last Name", "Email", "Password"]
-        users_data = fetch_all_users(file)
-        print(tabulate(users_data, headers=headers, tablefmt="grid"))
+def print_all_users(file):
+    headers = ["UUID", "First Name", "Last Name", "Email", "Password"]
+    users_data = fetch_all_users(file)
+    print(tabulate(users_data, headers=headers, tablefmt="grid"))
 
 def create_table():
     try:
@@ -257,4 +257,16 @@ def display_all_users(file):
     finally:
         con.close()
 
+def display_all_groups(file):
+    try:
+        con = sqlite3.connect(file)
+        cur = con.cursor()
+        cur.execute("""SELECT * FROM Groups;""")
+        groups_data = cur.fetchall()
+        headers = ["UUID", "Link", "Images", "Bed Count", "Bath Count", "Rent", "Address", "User UUIDs"]
+        print(tabulate(groups_data, headers=headers, tablefmt="grid"))
+    except sqlite3.Error as e:
+        print(f"Display All Groups Error: {e}")
+    finally:
+        con.close()
 display_all_users("database.db")
