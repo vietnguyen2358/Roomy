@@ -8,7 +8,8 @@ To run this project, you will need the following
 - imports from requirements.txt
 - imports from npm node modules
 - API key from Apify
-- API key from Mapbox
+- API key from Mapbox stored in .env file
+- URL stored in .env file
 # How to Setup the backend
 Clone the repository
 Create a virtual env called macEnv or winEnv
