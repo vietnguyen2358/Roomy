@@ -66,12 +66,17 @@ function BrowseGroups(props) {
   const bathroomsFilteredCards = bedroomsFilteredCards.filter((card) => {
     return card.bathCount >= bathrooms;
   });
-  console.log(bathroomsFilteredCards);
+  const searchedCards = !addressQuery
+    ? bathroomsFilteredCards
+    : bathroomsFilteredCards.filter((card) => {
+        const regex = new RegExp(addressQuery, "ig");
+        return regex.test(card.address);
+      });
   return (
     <div className="browse-groups">
-      {bathroomsFilteredCards.length > 0 ? (
+      {searchedCards.length > 0 ? (
         <>
-          {bathroomsFilteredCards.map((card) => {
+          {searchedCards.map((card) => {
             const { address, rent, bedCount, bathCount, imagesUrls } = card;
 
             return (
