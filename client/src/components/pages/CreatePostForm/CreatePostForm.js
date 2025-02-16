@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { animated, useSprings } from "@react-spring/web";
+import { animated, useSpring, useSprings } from "@react-spring/web";
 
 // Schemas
 import { ZillowLinkSchema } from "../../../schemas/ZillowSchemas";
@@ -47,29 +47,14 @@ function CreatePostForm() {
     },
   });
 
-  const [springs, api] = useSprings(
-    2,
-    (index) => {
-      if (index === 1) {
-        return {
-          from: { transform: "translate(0, 0)", opacity: 1 },
-          to: { transform: "translate(-10vw, 10vh)", opacity: 0 },
-          delay: 1000,
-        };
-      }
-
-      if (index === 2) {
-        return {
-          from: { transform: "translate(0, 0)" },
-          to: { transform: "translate(-10vw, 10vh)" },
-          delay: 500,
-        };
-      }
-    },
+  const [springProps, api] = useSpring(
+    () => ({
+      from: { transform: "translate(0, 0)", opacity: 1 },
+      to: { transform: "translate(-10vw, 10vh)", opacity: 0 },
+      delay: 1000,
+    }),
     []
   );
-
-  console.log(dataState.data);
 
   return (
     <div className="create-post-container main-container center">
@@ -101,87 +86,69 @@ function CreatePostForm() {
           </form>
         </div>
       ) : (
-        <>
-          {springs.map((props, index) => (
-            <animated.div key={index} style={props} className="item">
-              <div className="shadow house-shadow">
-                <div className="house-info">
-                  <img
-                    src={dataState.data.imagesUrls}
-                    alt={dataState.data.address}
-                  />
-                  <div className="house-info__box">
-                    <p className="house-info__rent">
-                      ${dataState.data.rent}/mo <span>(Estimate)</span>
-                    </p>
-                    <p className="house-info__address">
-                      {dataState.data.address}
-                    </p>
-                    <div className="row">
-                      <p className="house-info__beds">
-                        {dataState.data.bedCount} Beds
-                      </p>
-                      <p className="house-info__baths">
-                        {dataState.data.bathCount} Baths
-                      </p>
-                    </div>
-
-                    <button
-                      className="house-info__add center"
-                      onClick={() => {
-                        showLoading("Creating your new Roomy Group...");
-                        console.log(dataState.data);
-                        const {
-                          address,
-                          rent,
-                          bedCount,
-                          bathCount,
-                          imagesUrls,
-                          latitude,
-                          longitude,
-                          zillowLink,
-                        } = dataState.data;
-                        console.log({
-                          id: uid,
-                          address,
-                          rent,
-                          bedCount,
-                          bathCount,
-                          imagesUrls,
-                          latitude,
-                          longitude,
-                          zillowLink,
-                        });
-                        createGroup(
-                          {
-                            id: uid,
-                            address,
-                            rent,
-                            bedCount,
-                            bathCount,
-                            imagesUrls,
-                            latitude,
-                            longitude,
-                            zillowLink,
-                          },
-                          (data, err) => {
-                            if (err) return console.log(err);
-
-                            closeLoading();
-                            navigate("/groups");
-                          }
-                        );
-                      }}
-                    >
-                      <Add />
-                      Create Group
-                    </button>
-                  </div>
+        <animated.div style={springProps}>
+          <div className="shadow house-shadow">
+            <div className="house-info">
+              <img
+                src={dataState.data.imagesUrls}
+                alt={dataState.data.address}
+              />
+              <div className="house-info__box">
+                <p className="house-info__rent">
+                  ${dataState.data.rent}/mo <span>(Estimate)</span>
+                </p>
+                <p className="house-info__address">{dataState.data.address}</p>
+                <div className="row">
+                  <p className="house-info__beds">
+                    {dataState.data.bedCount} Beds
+                  </p>
+                  <p className="house-info__baths">
+                    {dataState.data.bathCount} Baths
+                  </p>
                 </div>
+
+                <button
+                  className="house-info__add center"
+                  onClick={() => {
+                    showLoading("Creating your new Roomy Group...");
+                    const {
+                      address,
+                      rent,
+                      bedCount,
+                      bathCount,
+                      imagesUrls,
+                      latitude,
+                      longitude,
+                      zillowLink,
+                    } = dataState.data;
+                    createGroup(
+                      {
+                        id: uid,
+                        zillowLink,
+                        imagesUrls,
+                        bedCount,
+                        bathCount,
+                        rent,
+                        address,
+                        longitude,
+                        latitude,
+                      },
+                      (data, err) => {
+                        if (err) return console.log(err);
+
+                        closeLoading();
+                        navigate("/groups");
+                      }
+                    );
+                  }}
+                >
+                  <Add />
+                  Create Group
+                </button>
               </div>
-            </animated.div>
-          ))}
-        </>
+            </div>
+          </div>
+        </animated.div>
       )}
     </div>
   );

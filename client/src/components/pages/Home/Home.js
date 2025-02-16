@@ -4,10 +4,16 @@ import { useFormik } from "formik";
 // Schemas
 import { QuerySchema } from "../../../schemas/ZillowSchemas";
 
+// Contexts
+import { useGlobal } from "../../../context/Global/Global.context";
+
+// Components
 import SearchBar from "./SearchBar";
 import BrowseGroups from "./BrowseGroups";
+import ActiveCard from "./ActiveCard";
 
 function Home() {
+  const { houseCardState } = useGlobal();
   const [addressQuery, setAddressQuery] = useState(null);
   const formik = useFormik({
     initialValues: {
@@ -28,6 +34,8 @@ function Home() {
         <SearchBar formik={formik} />
         <BrowseGroups addressQuery={addressQuery} />
       </main>
+
+      {houseCardState.show && <ActiveCard houseCardState={houseCardState} />}
     </div>
   );
 }

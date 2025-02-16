@@ -20,5 +20,6 @@ body {
 }
 
 .main-container {
-  padding: $spacer;
+  padding: $spacer * 1.25;
+  margin-left: 20vw;
 }

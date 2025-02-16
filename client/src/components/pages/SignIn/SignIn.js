@@ -23,8 +23,8 @@ function SignIn() {
     <AuthContainer>
       <AuthForm
         initialValues={{
-          email: "jordandt123411@gmail.com",
-          password: "Password123411$",
+          email: "",
+          password: "",
         }}
         isSignUp={false}
         schema={SignInSchema}
