@@ -289,3 +289,4 @@ def display_all_groups(file):
     finally:
         con.close()
 display_all_users("database.db")
+display_all_groups("database.db")
