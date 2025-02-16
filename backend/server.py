@@ -39,13 +39,7 @@ async def testPage():
 @app.post("/addUser") 
 async def addUser(request : Req):
     request.id = str(uuid.uuid4())
-    print(request.id)
-    print(request.firstName)
-    print(request.lastName)
-    print(request.password)
-    print(request.email)
     userObject = User(UUID = request.id, firstName = request.firstName, lastName = request.lastName, email = request.email, password = request.password)
-    print("testing", userObject.UUID, userObject.firstName, userObject.lastName, userObject.email, userObject.password)
     insert_user(getDBFile(), userObject)
     print_user(getDBFile(), userObject)
     return {"Success": True}
@@ -73,7 +67,9 @@ async def getZillowInfo(request: Req):
             "bathCount": data["bathrooms"], 
             "rent": data["rentZestimate"], 
             "price": data["price"],
-            "imagesUrls": data["desktopWebHdpImageLink"]}
+            "imagesUrls": data["desktopWebHdpImageLink"],
+            "latitude": data["latitude"],
+            "longitude": data["longitude"],}
 
 def getDBFile():
     return "database.db"
