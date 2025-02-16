@@ -335,10 +335,14 @@ def get_group_by_url(file, url):
         cur = con.cursor()
         cur.execute("""SELECT UUID, LINK, IMAGES, BEDCOUNT, BATHCOUNT, RENT, ADDRESS, LONGITUDE, LATITUDE FROM Groups WHERE LINK = ?;""", (url,))
         group_data = cur.fetchone()
+        if group_data is None:
+            con.close()
+            return None
         headers = ["UUID", "Link", "Images", "Bed Count", "Bath Count", "Rent", "Address", "Longitude", "Latitude"]
         return list(group_data)
     except sqlite3.Error as e:
         print(f"Get Group By URL Error: {e}")
+        con.close()
     finally:
         con.close()
 def display_all_groups(file):
