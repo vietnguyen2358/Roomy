@@ -10,9 +10,9 @@ class User:
         self.password = password
 
 class Group:
-    def __init__(self, UUID, users, link, images, bedCount, bathCount, rent, address, sqFt):
+    def __init__(self, UUID, userIDs, link, images, bedCount, bathCount, rent, address, sqFt):
         self.UUID = UUID
-        self.users = users
+        self.userIDs = userIDs
         self.link = link
         self.images = images
         self.bedCount = bedCount
@@ -32,22 +32,22 @@ def create_table():
         con = sqlite3.connect("database.db")
         cur = con.cursor()
         cur.executescript("""
-                      BEGIN;
-                      CREATE TABLE IF NOT EXISTS Users(UUID TEXT PRIMARY KEY UNIQUE,
-                                                    FIRST_NAME TEXT,
-                                                    LAST_NAME TEXT,
-                                                    EMAIL TEXT UNIQUE,
-                                                    PASSWORD TEXT);
-                      CREATE TABLE IF NOT EXISTS Groups(UUID TEXT PRIMARY KEY UNIQUE,
-                                         LINK TEXT,
-                                         IMAGES TEXT,
-                                         BEDCOUNT INTEGER,
-                                         BATHCOUNT INTEGER,
-                                         RENT FLOAT,
-                                         ADDRESS TEXT,
-                                         SQUAREFOOTAGE INTEGER,
-                                         FOREIGN KEY (USERS) REFERENCES Users(UUID));   
-                      COMMIT;    
+                    BEGIN;
+                    CREATE TABLE IF NOT EXISTS Users(UUID TEXT PRIMARY KEY UNIQUE NOT NULL,
+                                                    FIRST_NAME TEXT NOT NULL,
+                                                    LAST_NAME TEXT NOT NULL,
+                                                    EMAIL TEXT UNIQUE NOT NULL,
+                                                    PASSWORD TEXT NOT NULL);
+                    CREATE TABLE IF NOT EXISTS Groups(UUID TEXT PRIMARY KEY UNIQUE NOT NULL,
+                                                    LINK TEXT NOT NULL,
+                                                    IMAGES TEXT NOT NULL,
+                                                    BEDCOUNT INTEGER NOT NULL,
+                                                    BATHCOUNT INTEGER NOT NULL,
+                                                    RENT FLOAT NOT NULL,
+                                                    ADDRESS TEXT NOT NULL,
+                                                    SQUAREFOOTAGE INTEGER NOT NULL,
+                                                    USER_UUIDS TEXT NOT NULL);
+                    COMMIT;    
         """)
     except sqlite3.Error as e:
         print(f"Table Creation Error: {e}")
@@ -82,17 +82,17 @@ def add_group(file, group):
         cur.execute("""
                 INSERT INTO Groups VALUES
                     (UUID, 
-                    USERS, 
                     LINK,
                     IMAGES,
                     BEDCOUNT,
                     BATHCOUNT,
                     RENT,
                     ADDRESS,
-                    SQUAREFOOTAGE)
-                VALUES (?,?,?,?,?,?,?,?,?)
+                    SQUAREFOOTAGE,
+                    USERS)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (group.UUID, group.users, group.link, group.images, group.bedCount,group.bathCount ,group.rent ,group.address, group.sqFt))
+                (group.UUID, group.link, group.images, group.bedCount,group.bathCount ,group.rent ,group.address, group.sqFt, group.userIDs))
     except sqlite3.Error as e:
         print(f"Group Insertion Error: {e}")
     finally:
@@ -117,18 +117,18 @@ def update_group(file,group):
         cur.execute("""
                 UPDATE Groups
                 SET 
-                UUID = ?, 
-                USERS = ?, 
-                LINK = ?, 
-                IMAGES = ?, 
-                BEDCOUNT = ?, 
-                BATHCOUNT = ?, 
-                RENT = ?, 
-                ADDRESS = ?, 
-                SQUAREFOOTAGE = ?
+                    UUID = ?,  
+                    LINK = ?, 
+                    IMAGES = ?, 
+                    BEDCOUNT = ?, 
+                    BATHCOUNT = ?, 
+                    RENT = ?, 
+                    ADDRESS = ?, 
+                    SQUAREFOOTAGE = ?,
+                    USERS = ?
             WHERE UUID = ?
                 """,
-                (group.UUID, group.users, group.link, group.images, group.bedCount, group.bathCount, group.rent, group.adress, group.sqFt, group.UUID))
+                (group.UUID, group.link, group.images, group.bedCount, group.bathCount, group.rent, group.adress, group.sqFt, group.userIDs, group.UUID))
     except sqlite3.Error as e:
         print(f"Update Group Error: {e}")
     finally:
@@ -147,7 +147,7 @@ def fetch_all_groups(file):
         con.close()
 
 # get all users
-def fetch_user(file,user):
+def fetch_user(file, user):
     try:
         con = sqlite3.connect(file)
         cur = con.cursor()
@@ -165,15 +165,15 @@ def fetch_user(file,user):
 def verify(file, email, password):
     return cur.execute()
 
-# get all groups the user is in
-def fetch_user_groups(file,user,group):
-    con = sqlite3.connect(file)
-    cur = con.cursor()
-    cur.execute("""
-                SELECT * FROM Groups
-                WHERE ? = ?
-                """,
-                (user.UUID, group.users))
+# # get all groups the user is in
+def fetch_user_groups(file, user, group):
+#     con = sqlite3.connect(file)
+#     cur = con.cursor()
+#     cur.execute("""
+#                 SELECT * FROM Groups
+#                 WHERE ? = ?
+#                 """,
+#                 (user.UUID, group.users))
 
 # remove the apt listing
 def remove_group(file, user):
