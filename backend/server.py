@@ -4,9 +4,8 @@ from pydantic import BaseModel
 import uuid 
 from constants import APIFYKEY
 from apify_client import ApifyClient
-from db import User, insert_user, verify, User, print_user, Group, fetch_group, fetch_all_groups, add_group, update_group, remove_group, remove_user_from_group, get_group_by_url
+from db import User, insert_user, verify, User, print_user, Group, fetch_group, fetch_all_groups, add_group, update_group, remove_group, remove_user_from_group, get_group_by_url, insert_user_group
 from fastapi.middleware.cors import CORSMiddleware
-
 
 class Req (BaseModel):
     id: str = None
@@ -106,10 +105,14 @@ async def addGroup(request : Req):
                         address = request.address,
                         longitude = request.longitude,
                         latitude = request.latitude)
-    print(groupObject.userIDs)
-    print(groupObject.UUID)
     add_group(getDBFile(), groupObject)
     return {"Success": True}
+
+@app.put("/newGroupUser")
+async def newGroupUser(request : Req):
+    insert_user_group(getDBFile(), request.id, request.groupID)
+    return {"Success": True}
+
 
 @app.put("/updateGroup")
 async def updateGroup(request : Req):

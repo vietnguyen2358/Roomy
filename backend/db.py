@@ -131,7 +131,7 @@ def add_group(file, group):
         con.close()
   
 # add the user into the apt group    
-def insert_user_group(file, user, group):
+def insert_user_group(file, userUUID, groupUUID):
     try:
         con = sqlite3.connect(file)
         cur = con.cursor()
@@ -139,16 +139,16 @@ def insert_user_group(file, user, group):
                 SELECT USER_UUIDS FROM Groups
                     WHERE UUID = ?         
                 """,
-                (group.UUID,))
+                (groupUUID,))
         userIDs = cur.fetchone().split(',')
 
-        userIDs.append(user.UUID)
+        userIDs.append(userUUID)
         cur.execute("""
                 UPDATE Groups
                 SET USER_UUIDS = ?
                 WHERE UUID = ?;
                 """,
-                (','.join(userIDs), group.UUID))
+                (','.join(userIDs), groupUUID))
         con.commit()
     except sqlite3.Error as e:
         print(f"Group Insertion Error: {e}")
