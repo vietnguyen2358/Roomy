@@ -136,7 +136,21 @@ function CreatePostForm() {
                       (data, err) => {
                         if (err) return console.log(err);
 
+                        const { Success } = data;
+
                         closeLoading();
+                        // Save the created group locally in localStorage
+                        const existingGroups =
+                          JSON.parse(localStorage.getItem("groups")) || [];
+                        existingGroups.push({
+                          userId: uid,
+                          groupID: Success,
+                          ...dataState.data,
+                        });
+                        localStorage.setItem(
+                          "groups",
+                          JSON.stringify(existingGroups)
+                        );
                         navigate("/groups");
                       }
                     );

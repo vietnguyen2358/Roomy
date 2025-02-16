@@ -66,6 +66,7 @@ function BrowseGroups(props) {
   const bathroomsFilteredCards = bedroomsFilteredCards.filter((card) => {
     return card.bathCount >= bathrooms;
   });
+  console.log(bathroomsFilteredCards);
   return (
     <div className="browse-groups">
       {bathroomsFilteredCards.length > 0 ? (

@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 // Contexts
 import { useGlobal } from "./context/Global/Global.context";
+import { useUser } from "./context/User/User.context";
 
 // Components
 import Home from "./components/pages/Home/Home";
@@ -11,7 +12,7 @@ import SignIn from "./components/pages/SignIn/SignIn";
 import Spinner from "./components/standalone/Spinner/Spinner";
 import Navbar from "./components/layout/nav/Navbar";
 import CreatePostForm from "./components/pages/CreatePostForm/CreatePostForm";
-import { useUser } from "./context/User/User.context";
+import Groups from "./components/pages/Groups/Groups";
 
 function App() {
   const { pathname } = useLocation();
@@ -52,6 +53,12 @@ function App() {
             ) : (
               <Navigate to="/signin" replace />
             )
+          }
+        />
+        <Route
+          path="/groups"
+          element={
+            auth.isSignedIn ? <Groups /> : <Navigate to="/signin" replace />
           }
         />
 
