@@ -265,16 +265,6 @@ def verify(file, email, password):
         print(f"User Verification Error: {e}")
         return None
 
-# # get all groups the user is in
-# def fetch_user_groups(file, user, group):
-#     con = sqlite3.connect(file)
-#     cur = con.cursor()
-#     cur.execute("""
-#                 SELECT * FROM Groups
-#                 WHERE ? = ?
-#                 """,
-#                 (user.UUID, group.users))
-
 # remove the user from group
 def remove_user_from_group(file, groupUUID, userUUID):
     try:
